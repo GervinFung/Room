@@ -2,8 +2,10 @@ import requests
 import pprint
 import unicodedata
 import datetime
+import pymongo
 from bs4 import BeautifulSoup
 from bs4 import NavigableString
+from pymongo import MongoClient
 
 def insert_contact(accom_dict, contact_column):
     contact_info = contact_column.find_all('b', recursive=False)
@@ -52,6 +54,16 @@ def insert_remark(accom_dict, remark_column):
     accom_dict['available_from'] = available_from
     accom_dict['remarks'] = remarks
 
+def insert_to_database(rooms):
+    username = "eugeneyjy"
+    password = "Dnthackmepls78"
+    uri = "mongodb+srv://" + username + ":" + password + "@room.88id4.mongodb.net/accom?retryWrites=true&w=majority"
+    client = MongoClient(uri)
+    db = client.utar_accom
+    room_collection = db.room
+    room_collection.delete_many({})
+    room_collection.insert_many(rooms)
+
 def main():
     frenttype = 'frenttype=Room'
     fcode = 'fcode=KP'
@@ -81,8 +93,8 @@ def main():
         if(accom_dict):
             rooms.append(accom_dict)
 
-
-    pprint.pprint(rooms)
     print('number of rooms: ' + str(len(rooms)))
+
+    insert_to_database(rooms)
 
 main()
