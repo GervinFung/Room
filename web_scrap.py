@@ -1,6 +1,7 @@
 import requests
 import pprint
 import unicodedata
+import datetime
 from bs4 import BeautifulSoup
 from bs4 import NavigableString
 
@@ -35,12 +36,21 @@ def insert_location(accom_dict, location_column):
     all = location_column.find_all(True)
     address = ""
     for info in all:
-        # print(info.next_sibling.strip())
         address += info.next_sibling.strip()
-        # print(info.next_sibling)
     address = address.replace('\r\n', '')
     address = address.replace(',,', ', ')
     accom_dict['address'] = address
+
+def insert_remark(accom_dict, remark_column):
+    available_from = {}
+    availability = remark_column.next_element.strip().split(' ')
+    remarks = remark_column.next_element.next_element.next_element.strip()
+    remarks = remarks.replace('\r\n', ' ')
+    remarks = remarks.replace('  ', ' ')
+    available_from['month'] = datetime.datetime.strptime(availability[2], '%b').month
+    available_from['year'] = availability[3]
+    accom_dict['available_from'] = available_from
+    accom_dict['remarks'] = remarks
 
 def main():
     frenttype = 'frenttype=Room'
@@ -65,13 +75,14 @@ def main():
                 insert_room(accom_dict, column)
             elif i == 3:
                 insert_location(accom_dict, column)
-            # elif i == 4:
+            elif i == 4:
+                insert_remark(accom_dict, column)
             i += 1
         if(accom_dict):
             rooms.append(accom_dict)
 
 
     pprint.pprint(rooms)
-    print(len(rooms))
+    print('number of rooms: ' + str(len(rooms)))
 
 main()
