@@ -19,6 +19,8 @@ def insert_contact(accom_dict, contact_column):
         elif info.text == 'Email:':
             accom_dict['email'] = process_str
     accom_dict['name'] = name.text
+    a = contact_column.find('a', recursive=False)
+    insert_facilities(accom_dict, a['href'])
 
 def insert_room(accom_dict, room_column):
     room_list = []
@@ -54,6 +56,28 @@ def insert_remark(accom_dict, remark_column):
     accom_dict['available_from'] = available_from
     accom_dict['remarks'] = remarks
 
+def insert_facilities(accom_dict, detail_url):
+    # print(detail_url)
+    detail_url = 'http://www2.utar.edu.my/' + detail_url
+    page = requests.get(detail_url)
+    content = page.content
+
+    soup = BeautifulSoup(content, 'html.parser')
+    table = soup.find('table')
+    rows = table.find_all('tr', recursive=False)
+    facilities = rows[10].find_all('font')
+
+    facilities_list = []
+    for facility in facilities:
+        if facility.text != "Facilities:" and facility.text != "Others:":
+            facilities_list.append(facility.text)
+
+    others = facilities_list.pop().split(', ')
+    if others != ['']:
+        facilities_list += others
+    accom_dict['facilities'] = facilities_list
+    page.close()
+
 def insert_to_database(rooms):
     username = "eugeneyjy"
     password = "Dnthackmepls78"
@@ -66,34 +90,38 @@ def insert_to_database(rooms):
 
 def main():
     frenttype = 'frenttype=Room'
-    fcode = 'fcode=KP'
-    url = 'http://www2.utar.edu.my/accomList.jsp?' + frenttype + '&' + fcode
-    page = requests.get(url)
-    content = page.content
+    fcodes = ['KP','SL']
 
-    soup = BeautifulSoup(content, 'html.parser')
-    results = soup.find(id='Room')
-    table = results.find('table')
-    rows = table.find_all(onmouseover=True)
     rooms = []
-    for row in rows:
-        columns = row.find_all('td')
-        accom_dict = {}
-        i = 0
-        for column in columns:
-            if i == 1:
-                insert_contact(accom_dict, column)
-            elif i == 2:
-                insert_room(accom_dict, column)
-            elif i == 3:
-                insert_location(accom_dict, column)
-            elif i == 4:
-                insert_remark(accom_dict, column)
-            i += 1
-        if(accom_dict):
-            rooms.append(accom_dict)
 
-    print('number of rooms: ' + str(len(rooms)))
+    for fcode in fcodes:
+        url = 'http://www2.utar.edu.my/accomList.jsp?' + frenttype + '&fcode=' + fcode
+        page = requests.get(url)
+        content = page.content
+
+        soup = BeautifulSoup(content, 'html.parser')
+        results = soup.find(id='Room')
+        table = results.find('table')
+        rows = table.find_all(onmouseover=True)
+        for row in rows:
+            columns = row.find_all('td')
+            accom_dict = {'campus': fcode}
+            i = 0
+            for column in columns:
+                if i == 1:
+                    insert_contact(accom_dict, column)
+                elif i == 2:
+                    insert_room(accom_dict, column)
+                elif i == 3:
+                    insert_location(accom_dict, column)
+                elif i == 4:
+                    insert_remark(accom_dict, column)
+                i += 1
+            if(accom_dict):
+                rooms.append(accom_dict)
+
+        print('number of rooms: ' + str(len(rooms)))
+        page.close()
 
     insert_to_database(rooms)
 
