@@ -1,11 +1,8 @@
 import requests
-import pprint
-import unicodedata
 import datetime
-import pymongo
 from bs4 import BeautifulSoup
-from bs4 import NavigableString
 from pymongo import MongoClient
+
 
 def insert_contact(accom_dict, contact_column):
     contact_info = contact_column.find_all('b', recursive=False)
@@ -22,11 +19,12 @@ def insert_contact(accom_dict, contact_column):
     a = contact_column.find('a', recursive=False)
     insert_facilities(accom_dict, a['href'])
 
+
 def insert_room(accom_dict, room_column):
     room_list = []
-    all = room_column.find_all(True)
-    for info in all:
-        if(info.name == 'br' and info.next_sibling.name != 'br' and info.next_sibling.strip() != ''):
+    all_room_column = room_column.find_all(True)
+    for info in all_room_column:
+        if info.name == 'br' and info.next_sibling.name != 'br' and info.next_sibling.strip() != '':
             room_dict = {}
             room = info.next_sibling.strip().split('\xa0/\xa0')
             room_dict['type'] = room[0].split(' ')[0]
@@ -36,14 +34,16 @@ def insert_room(accom_dict, room_column):
 
     accom_dict['rooms'] = room_list
 
+
 def insert_location(accom_dict, location_column):
-    all = location_column.find_all(True)
+    all_location_column = location_column.find_all(True)
     address = ""
-    for info in all:
+    for info in all_location_column:
         address += info.next_sibling.strip()
     address = address.replace('\r\n', '')
     address = address.replace(',,', ', ')
     accom_dict['address'] = address
+
 
 def insert_remark(accom_dict, remark_column):
     available_from = {}
@@ -88,6 +88,7 @@ def insert_to_database(rooms):
     room_collection.delete_many({})
     room_collection.insert_many(rooms)
 
+
 def main():
     frenttype = 'frenttype=Room'
     fcodes = ['KP','SL']
@@ -117,7 +118,7 @@ def main():
                 elif i == 4:
                     insert_remark(accom_dict, column)
                 i += 1
-            if(accom_dict):
+            if accom_dict:
                 rooms.append(accom_dict)
 
         print('number of rooms: ' + str(len(rooms)))
@@ -125,4 +126,6 @@ def main():
 
     insert_to_database(rooms)
 
-main()
+
+if __name__ == '__main__':
+    main()
