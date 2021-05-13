@@ -3,21 +3,28 @@
     font-size: 1.5em;
     margin: 10px;
     border: solid transparent;
-    transition: 0.5s ease-in-out;
     border-radius: 25px;
     color: var(--primary-color);
 }
 
-#kampar {
-    color: var(--secondary-color);
-    background-color:var(--primary-color);
-    border: 3px solid var(--primary-color);
+.button-wrapper {margin: 20px}
+
+.button {text-decoration: none}
+.button-wrapper:hover {
+    transform: scale(1.1);
+    transition: ease-in-out 0.2s;
 }
 
-#sg-long {
+#sg-long, #kampar {
     color:var(--primary-color);
     background-color:  var(--secondary-color);
     border: 3px solid var(--primary-color);
+}
+
+.active-campus {
+    color: var(--secondary-color) !important;
+    background-color:var(--primary-color) !important;
+    border: 3px solid var(--primary-color) !important;
 }
 
 .filter-input input {border: 3px solid var(--primary-color) !important}
@@ -27,7 +34,7 @@
 /* content */
 
 .price, .available, .tenants, .address {
-    font-weight:900;
+    font-weight: 900;
     font-size: 1.15em;
 }
 
@@ -44,6 +51,25 @@
 
 .address-info {margin-bottom: 25px}
 
+.vital-info {width: 75%}
+
+.less-vital-info {width: 20%}
+
 @media (max-width: 360px) {
     .infos {display: block}
+    .vital-info, .less-vital-info {width: 100%}
+    .accomodation-infos {display: inline-flex}
+    .accomodation-info {
+        width: 50%;
+        position: relative;
+        display: flex;
+    }
+    .title, .filter-input, .button {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 771px) {
+    .vital-info {width: 75%}
+    .less-vital-info {width: 40%}
 }
