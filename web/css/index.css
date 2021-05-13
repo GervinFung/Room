@@ -1,0 +1,29 @@
+.question {
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.content {
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+}
+
+.campus img{
+    height: auto;
+    width: 500px;
+}
+
+.campus {
+    transition: 0.5s ease
+}
+
+.campus:hover {
+    transform: scale(1.1)
+}
+
+.campus-name {
+    text-align: center
+}

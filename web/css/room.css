@@ -1,0 +1,49 @@
+.button, .filter-input input {
+    padding: 6px 16px 6px 16px;
+    font-size: 1.5em;
+    margin: 10px;
+    border: solid transparent;
+    transition: 0.5s ease-in-out;
+    border-radius: 25px;
+    color: var(--primary-color);
+}
+
+#kampar {
+    color: var(--secondary-color);
+    background-color:var(--primary-color);
+    border: 3px solid var(--primary-color);
+}
+
+#sg-long {
+    color:var(--primary-color);
+    background-color:  var(--secondary-color);
+    border: 3px solid var(--primary-color);
+}
+
+.filter-input input {border: 3px solid var(--primary-color) !important}
+
+.filter-input input:focus {outline: none}
+
+/* content */
+
+.price, .available, .tenants, .address {
+    font-weight:900;
+    font-size: 1.15em;
+}
+
+.infos {
+    border-top: 3px solid var(--primary-color);
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+}
+
+.infos:hover {background-color: azure}
+
+.info {margin: 16px}
+
+.address-info {margin-bottom: 25px}
+
+@media (max-width: 360px) {
+    .infos {display: block}
+}
