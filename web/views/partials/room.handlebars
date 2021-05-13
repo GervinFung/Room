@@ -1,0 +1,34 @@
+<div class="infos">
+    <div class="vital-info">
+        <address class="address-info info">
+            <h1 class="address">Address</h1>
+            <p>House Number: 11</p>
+            <p>Area: Jln Mahsuri Impian 11, Tmn Mahsuri Impian</p>
+            <p>Area Code: 31900</p>
+        </address>
+        <div class="remarks-info info">
+            <div>
+                <p class="available">Available From: May {{available_from.year}}</p>
+            </div>
+            <div>
+                <p>{{remarks}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="less-vital-info">
+        <div class="contact-info info">
+            <p>{{name}} &#183; {{hp_no}}</p>
+        </div>
+        <div class="accomodation-infos info">
+          {{#each rooms}}
+            <div class="accomodation-info">
+                <p>{{type}}</p>
+                <ul>
+                    <li class="tenants">{{capacity}} tenants</li>
+                    <li class="price">&#36;{{price}} / tenant</li>
+                </ul>
+            </div>
+          {{/each}}
+        </div>
+    </div>
+</div>

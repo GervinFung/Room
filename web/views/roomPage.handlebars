@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="../img/index.jpg" alt="">
+        </div>
+        <div class="title">
+            <h2>Accomodation Listing</h2>
+        </div>
+        <div class="filter-input">
+            <input type="text" name="advanced-search" id="advanced-search" placeholder="Eg. 200 (for price)">
+        </div>
+        <div class="buttons">
+            <div class="button-wrapper">
+                <button class="button" id="kampar">Kampar</button>
+            </div>
+            <div class="button-wrapper">
+                <button class="button" id="sg-long">Sg Long</button>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+      {{#each places}}
+        {{> room}}
+      {{/each}}
+    </div>
+    <div class="footer">
+        <div class="title">
+            <h2>Footer</h2>
+        </div>
+    </div>
+</div>

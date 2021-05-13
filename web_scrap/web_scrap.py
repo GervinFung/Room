@@ -81,7 +81,7 @@ def insert_facilities(accom_dict, detail_url):
 def insert_to_database(rooms):
     username = "eugeneyjy"
     password = "Dnthackmepls78"
-    uri = "mongodb+srv://" + username + ":" + password + "@room.88id4.mongodb.net/accom?retryWrites=true&w=majority"
+    uri = "mongodb+srv://" + username + ":" + password + "@room.88id4.mongodb.net/utar_accom?retryWrites=true&w=majority"
     client = MongoClient(uri)
     db = client.utar_accom
     room_collection = db.room
