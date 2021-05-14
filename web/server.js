@@ -4,13 +4,20 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const config = require('./config.js')
-const
+const moment = require('moment')
+
 const app = express()
 const port = 8000
 
 let db = null
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: {
+    formatDate: (date, format) => {
+      return moment(date).format(format)
+    }
+  }}))
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
