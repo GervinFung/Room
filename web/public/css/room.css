@@ -74,10 +74,11 @@
         padding: 0;
     }
     .accomodation-info {width: 50%}
-    .title, .filter-input, .button {font-size: 0.85em}
+    .title, .filter-input input, .button {font-size: 0.85em}
     .tenants, .price {font-size: 0.9em}
 }
 
 @media (max-width: 311px) {
-    .tenants, .price, .filter-input, .button {font-size: 0.7em}
+    .tenants, .price, .filter-input input, .button {font-size: 0.7em}
+    .button-wrapper {margin: 10px 0 10px 0}
 }
