@@ -55,21 +55,29 @@
 
 .less-vital-info {width: 20%}
 
-@media (max-width: 360px) {
-    .infos {display: block}
-    .vital-info, .less-vital-info {width: 100%}
-    .accomodation-infos {display: inline-flex}
-    .accomodation-info {
-        width: 50%;
-        position: relative;
-        display: flex;
-    }
-    .title, .filter-input, .button {
-        font-size: 0.85em;
-    }
-}
-
-@media (max-width: 771px) {
+@media (max-width: 771px) and (min-width: 370px) {
     .vital-info {width: 75%}
     .less-vital-info {width: 40%}
+}
+
+@media (max-width: 370px) {
+    .infos {display: block}
+    .vital-info, .less-vital-info {width: 100%}
+    .info {text-align: center}
+    .accomodation-infos {
+        width: 100%;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        display: inline-flex;
+        margin: 0;
+        padding: 0;
+    }
+    .accomodation-info {width: 50%}
+    .title, .filter-input, .button {font-size: 0.85em}
+    .tenants, .price {font-size: 0.9em}
+}
+
+@media (max-width: 311px) {
+    .tenants, .price, .filter-input, .button {font-size: 0.7em}
 }

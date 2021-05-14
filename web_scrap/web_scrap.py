@@ -45,7 +45,7 @@ def insert_location(accom_dict, location_column, fcode):
         address = address.rsplit('Kampar', 1)[0].replace('Kampar', '')
     elif fcode == 'SL':
         address = address.rsplit('Kajang', 1)[0].replace('Kajang', '').rsplit('Selangor', 1)[0].replace('Selangor', '')
-    address = address.strip().replace(',', ', ').replace('.,', '')
+    address = address.strip().replace(',', ', ').replace('.,', '').replace(' , ', '')
     accom_dict['address'] = address
 
 

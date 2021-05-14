@@ -1,10 +1,9 @@
 const path = require('path')
 const express = require('express')
 const exphbs = require('express-handlebars')
-const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const config = require('./config.js')
-const
+
 const app = express()
 const port = 8000
 
@@ -15,7 +14,7 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res, next) => {
   res.status(200).sendFile(path.resolve('./public/html/index.html'))

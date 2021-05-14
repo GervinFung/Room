@@ -16,14 +16,29 @@
     width: 500px;
 }
 
-.campus {
-    transition: 0.5s ease
+.campus {transition: 0.5s ease}
+
+.campus:hover {transform: scale(1.1)}
+
+.campus-name, .campus-img {
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
-.campus:hover {
-    transform: scale(1.1)
+@media (max-width: 1113px) {
+    .campus img{width: 400px}
 }
 
-.campus-name {
-    text-align: center
+@media (max-width: 883px) {
+    .campus img{width: 300px}
+}
+
+@media (max-width: 669px) {
+    .campus img{width: 200px}
+}
+
+@media (max-width: 451px) {
+    .campus img{width: 200px}
+    .content {display: block}
 }
