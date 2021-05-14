@@ -45,18 +45,21 @@ def insert_location(accom_dict, location_column, fcode):
         address = address.rsplit('Kampar', 1)[0].replace('Kampar', '')
     elif fcode == 'SL':
         address = address.rsplit('Kajang', 1)[0].replace('Kajang', '').rsplit('Selangor', 1)[0].replace('Selangor', '')
-    address = address.strip().replace(',', ', ').replace('.,', '')
+    address = address.strip().replace(',', ', ').replace('.,', '').replace(' , ', '').replace('  ', ' ')
     accom_dict['address'] = address
 
 
 def insert_remark(accom_dict, remark_column):
-    available_from = {}
+    # available_from = {}
     availability = remark_column.next_element.strip().split(' ')
     remarks = remark_column.next_element.next_element.next_element.strip()
     remarks = remarks.replace('\r\n', ' ')
     remarks = remarks.replace('  ', ' ')
-    available_from['month'] = datetime.datetime.strptime(availability[2], '%b').month
-    available_from['year'] = availability[3]
+    # available_from['month'] = datetime.datetime.strptime(availability[2], '%b').month
+    # available_from['year'] = availability[3]
+    year = int(availability[3])
+    month = datetime.datetime.strptime(availability[2], '%b').month
+    available_from = datetime.datetime(year, month, 1)
     accom_dict['available_from'] = available_from
     accom_dict['remarks'] = remarks
 
