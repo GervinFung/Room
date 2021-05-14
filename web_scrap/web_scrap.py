@@ -35,13 +35,17 @@ def insert_room(accom_dict, room_column):
     accom_dict['rooms'] = room_list
 
 
-def insert_location(accom_dict, location_column):
+def insert_location(accom_dict, location_column, fcode):
     all_location_column = location_column.find_all(True)
-    address = ""
+    address = ''
     for info in all_location_column:
         address += info.next_sibling.strip()
-    address = address.replace('\r\n', '')
-    address = address.replace(',,', ', ')
+    address = address.replace(',,', ',').replace(', ', ',').replace('\r\n', '').replace(' ,', '')
+    if fcode == 'KP':
+        address = address.rsplit('Kampar', 1)[0].replace('Kampar', '')
+    elif fcode == 'SL':
+        address = address.rsplit('Kajang', 1)[0].replace('Kajang', '').rsplit('Selangor', 1)[0].replace('Selangor', '')
+    address = address.strip().replace(',', ', ').replace('.,', '')
     accom_dict['address'] = address
 
 
@@ -55,6 +59,7 @@ def insert_remark(accom_dict, remark_column):
     available_from['year'] = availability[3]
     accom_dict['available_from'] = available_from
     accom_dict['remarks'] = remarks
+
 
 def insert_facilities(accom_dict, detail_url):
     # print(detail_url)
@@ -77,6 +82,7 @@ def insert_facilities(accom_dict, detail_url):
         facilities_list += others
     accom_dict['facilities'] = facilities_list
     page.close()
+
 
 def insert_to_database(rooms):
     username = "eugeneyjy"
@@ -114,7 +120,7 @@ def main():
                 elif i == 2:
                     insert_room(accom_dict, column)
                 elif i == 3:
-                    insert_location(accom_dict, column)
+                    insert_location(accom_dict, column, fcode)
                 elif i == 4:
                     insert_remark(accom_dict, column)
                 i += 1
