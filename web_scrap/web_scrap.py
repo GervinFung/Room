@@ -77,7 +77,7 @@ def insert_facilities(accom_dict, detail_url):
 
     facilities_list = []
     for facility in facilities:
-        if facility.text != "Facilities:" and facility.text != "Others:":
+        if facility.text != 'Facilities:' and facility.text != 'Others:':
             facilities_list.append(facility.text)
 
     others = facilities_list.pop().split(', ')
@@ -88,9 +88,9 @@ def insert_facilities(accom_dict, detail_url):
 
 
 def insert_to_database(rooms):
-    username = "eugeneyjy"
-    password = "Dnthackmepls78"
-    uri = "mongodb+srv://" + username + ":" + password + "@room.88id4.mongodb.net/utar_accom?retryWrites=true&w=majority"
+    username = 'eugeneyjy'
+    password = 'Dnthackmepls78'
+    uri = 'mongodb+srv://' + username + ':' + password + '@room.88id4.mongodb.net/utar_accom?retryWrites=true&w=majority'
     client = MongoClient(uri)
     db = client.utar_accom
     room_collection = db.room

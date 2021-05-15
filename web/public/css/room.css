@@ -1,25 +1,85 @@
-.button, .filter-input input {
-    padding: 6px 16px 6px 16px;
-    font-size: 1.5em;
+.button, .filter-input {
     margin: 10px;
     border: solid transparent;
     border-radius: 25px;
     color: var(--primary-color);
 }
 
+.filter-wrapper, .option {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.filter-input {
+    padding: 4px 10px 4px 10px;
+    box-shadow: 0 3px 10px 0 rgba(0,0,0,0.5);
+    border: 3px solid var(--primary-color) !important;
+}
+
+.filter-input > label > input {
+    border: none;
+    font-size: 1.5em;
+}
+
+.filter-input:focus, .filter-input > label > input {outline: none}
+
+.fa-search:focus {outline: none}
+
+.fa-search {
+    background-color: #282a36;
+    padding: 10px;
+    width: 10px;
+    height: 10px;
+    text-decoration: none;
+    margin: 5px 10px;
+    color: whitesmoke;
+    border-radius: 50%;
+}
+
 .button-wrapper {margin: 20px}
 
-.button {text-decoration: none}
-.button-wrapper:hover {
+.button-wrapper:hover, .dropdown > button:hover {
     transform: scale(1.1);
     transition: ease-in-out 0.2s;
 }
 
-#sg-long, #kampar {
+.button, .option > button {
+    padding: 6px 16px 6px 16px;
+    text-decoration: none;
+}
+
+.option > button {
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: none;
+    margin: 5px;
+    position: relative;
+}
+
+.button {
+    font-size: 1.5em;
     color:var(--primary-color);
-    background-color:  var(--secondary-color);
+    background-color: var(--secondary-color);
     border: 3px solid var(--primary-color);
 }
+
+.save-button {
+    color: var(--secondary-color);
+    background-color:var(--primary-color);
+    float: right;
+    margin-left: 15px;
+}
+
+.clear-button {
+    color: grey;
+    background-color:var(--secondary-color);
+    text-decoration: underline;
+    float: left;
+    margin-right: 15px;
+}
+
+.available {color: var(--primary-color) !important}
 
 .active-campus {
     color: var(--secondary-color) !important;
@@ -27,12 +87,183 @@
     border: 3px solid var(--primary-color) !important;
 }
 
-.filter-input input {border: 3px solid var(--primary-color) !important}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
-.filter-input input:focus {outline: none}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--secondary-color);
+    min-width: 100%;
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.5);
+    z-index: 1;
+    border-radius: 25px;
+}
+
+.dropdown-content label {
+    color: var(--primary-color);
+    padding: 12px 16px 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.room-capacity {
+    font-size: 1.3em;
+    margin-left: 6px;
+}
+
+.dropdown-content label:hover {background-color:whitesmoke}
+
+
+
+
+
+.range {margin: 20px}
+
+.slider {
+    position: relative;
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    margin: 10px 0 15px 0;
+}
+    
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid lightgrey;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+    margin-top: -14px;
+}
+
+.slider:focus {
+    outline: none;
+}
+
+.slider::-ms-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+}
+  
+
+.slider::-moz-range-thumb {
+    border:  1px solid lightgrey;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+
+.slider::-ms-thumb {
+    border:  1px solid lightgrey;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+
+/* track */
+.slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    background: crimson;
+    border-radius: 1px;
+    border: none
+}
+  
+.slider:focus::-webkit-slider-runnable-track {background: crimson}
+  
+.slider::-moz-range-track {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    background:crimson;
+    border-radius: 1px;
+    border: none;
+}
+  
+.slider::-ms-fill-lower {
+    background: crimson;
+    border: none;
+    border-radius: 3px;
+}
+.slider:focus::-ms-fill-lower {
+    background: crimson;
+}
+.slider::-ms-fill-upper {
+    background: crimson;
+    border: none;
+    border-radius: 3px;
+}
+.slider:focus::-ms-fill-upper {
+    background: crimson;
+}
+
+.price-wrapper {
+    outline: none;
+    padding: 6px 16px 6px 16px;
+    border-radius: 15px;
+    border: 2px solid lightslategray;
+}
+
+.price-wrapper:focus-within {border: 2px solid var(--primary-color)}
+
+.price-wrapper > label {
+    border: none;
+    background-color: white !important;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.price-wrapper > label > span {margin-right: 5px}
+
+.price:focus {outline: none}
+
+.price {
+    outline: none;
+    border-radius: 15px;
+    border: none;
+    background-color: white;
+}
+
+input[type="number"] {width: auto}
+
+.price::-webkit-outer-spin-button, .price::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.price {-moz-appearance: textfield}
+
+
+
+
+
+
+
 
 /* content */
-
 .price, .available, .tenants, .address {
     font-weight: 900;
     font-size: 1.15em;
@@ -47,24 +278,33 @@
 
 .infos:hover {background-color: azure}
 
-.info {margin: 16px}
-
-.address-info {margin-bottom: 25px}
-
 .vital-info {width: 75%}
-
 .less-vital-info {width: 20%}
+
+.info {margin: 16px}
+.address-info {margin-bottom: 25px}
+.accomodation-infos {border-top: 2px solid gray}
+.option {border-top: 1px solid lightslategray}
 
 @media (max-width: 771px) and (min-width: 370px) {
     .vital-info {width: 75%}
     .less-vital-info {width: 40%}
 }
 
+@media (max-width: 400px) {
+    .fa-search {display: none !important}
+    .filter-input > label > input {margin: 5px 10px 5px 10px}
+}
+
 @media (max-width: 370px) {
+    .dropdown-content {margin-left: -30px !important;}
     .infos {display: block}
+    .option > button, .price-wrapper > p {font-size: 0.8em}
+    .contact-info, .accomodation-infos {margin-top: 25px}
     .vital-info, .less-vital-info {width: 100%}
     .info {text-align: center}
     .accomodation-infos {
+        border-top: none;
         width: 100%;
         flex-wrap: wrap;
         align-items: center;
@@ -73,12 +313,18 @@
         margin: 0;
         padding: 0;
     }
+    ul {
+        list-style-type:none;
+        padding-left: 0;
+    }
     .accomodation-info {width: 50%}
-    .title, .filter-input input, .button {font-size: 0.85em}
+    .title, .filter-input > label > input, .fa-search > label, .button {font-size: 0.85em}
     .tenants, .price {font-size: 0.9em}
 }
 
 @media (max-width: 311px) {
-    .tenants, .price, .filter-input input, .button {font-size: 0.7em}
+    .tenants, .price, .filter-input > label > input, .button {font-size: 0.8em}
     .button-wrapper {margin: 10px 0 10px 0}
+    .price-wrapper {padding: 5px}
+    input[type="number"] {width: 80%}
 }

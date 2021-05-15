@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/room.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/Montserrat/stylesheet.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     <title>UTAR ROOM RENTAL</title>
 </head>
 <body>
@@ -18,15 +19,50 @@
             <div class="title">
                 <h2>Accomodation Listing</h2>
             </div>
-            <div class="filter-input">
-                <input type="text" name="advanced-search" id="advanced-search" placeholder="Eg. 200 (for price)">
+            <div class="filter-wrapper">
+                <div class="filter-input">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <label>
+                        <input type="text" name="advanced-search" id="advanced-search" placeholder="Type here to search" autofocus>
+                    </label>
+                </div>
             </div>
-            <div class="buttons">
+            <div class="filter-wrapper">
                 <div class="button-wrapper">
-                    <button class="button" id="kampar">Kampar</button>
+                     <a href="room?campus=KP" class="button" id="kampar">Kampar</a>
                 </div>
                 <div class="button-wrapper">
-                    <button class="button" id="sg-long">Sg Long</button>
+                    <a href="room?campus=SL" class="button" id="sg-long">Sg Long</a>
+                </div>
+            </div>
+            <div class="filter-wrapper">
+                <div class="dropdown" id="room-capacity-dropdown">
+                    <button id="room-capacity-button" class="button">Room Capacity</button>
+                    <div class="dropdown-content" id="room-capacity-dropdown-content">
+                        <div id="room-capacity-list">
+                            <label><input type="checkbox" id="capacity-1"><span class="room-capacity">1 Tenant</span></label>
+                            <label><input type="checkbox" id="capacity-2"><span class="room-capacity">2 Tenant</span></label>
+                            <label><input type="checkbox" id="capacity-3"><span class="room-capacity">3 Tenant</span></label>
+                        </div>
+                        <div class="option">
+                            <button id="cancel-button">Clear</button>
+                            <button id="save-button">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown" id="room-capacity-dropdown">
+                    <button id="room-capacity-button" class="button">Room Capacity</button>
+                    <div class="dropdown-content" id="room-capacity-dropdown-content">
+                        <div id="room-capacity-list">
+                            <label><input type="checkbox" id="capacity-1"><span class="room-capacity">1 Tenant</span></label>
+                            <label><input type="checkbox" id="capacity-2"><span class="room-capacity">2 Tenant</span></label>
+                            <label><input type="checkbox" id="capacity-3"><span class="room-capacity">3 Tenant</span></label>
+                        </div>
+                        <!-- <div class="option">
+                            <button id="cancel-button">Clear</button>
+                            <button id="save-button">Save</button>
+                        </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,3 +122,4 @@
     </div>
 </body>
 </html>
+<script src="../js/room.js"></script>
