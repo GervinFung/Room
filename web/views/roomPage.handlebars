@@ -8,7 +8,7 @@
         </div>
         <div class="filter-wrapper">
             <div class="filter-input">
-                <i class="fa fa-search" aria-hidden="true"></i>
+                <i class="fa fa-search"></i>
                 <label>
                     <input type="text" name="advanced-search" id="advanced-search" placeholder="Type here to search" autofocus>
                 </label>
@@ -22,7 +22,7 @@
                 <a href="room?campus=SL" class="button" id="sg-long">Sg Long</a>
             </div>
         </div>
-        <div class="filter-wrapper">
+        <div class="filter-wrapper" id="non-campus-filter">
             <div class="dropdown" id="price-range-dropdown">
                 <button id="price-range-button" class="button">Price</button>
                 <div class="dropdown-content" id="price-range-dropdown-content">
@@ -31,14 +31,14 @@
                             <input type="range" min="100" max="1000" value="100" class="slider" id="lower-range-scroll">
                             <div class="price-wrapper">
                                 <p>min price</p>
-                                <label><span>RM</span><input min="100" type="number" id="lower-range-input" class="price"></label>
+                                <label><span>RM</span><input min="100" max="1000" type="number" id="lower-range-input" class="price"></label>
                             </div>
                         </div>
                         <div class="range">
-                            <input type="range" min="100" max="1000" value="100" class="slider" id="upper-range-scroll">
+                            <input type="range" min="100" max="1000" value="1000" class="slider" id="upper-range-scroll">
                             <div class="price-wrapper">
                                 <p>max price</p>
-                                <label><span>RM</span><input min="100" type="number" id="upper-range-input" class="price"></label>
+                                <label><span>RM</span><input min="100" max="1000" type="number" id="upper-range-input" class="price"></label>
                             </div>
                         </div>
                     </div>

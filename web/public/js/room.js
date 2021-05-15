@@ -59,6 +59,7 @@ function filterRoomCapacity() {
             }
         }
         console.log('proceed with query..' + selectedCapacity)
+        dropDownRCButton.innerHTML = selectedCapacity.length === 0 ? 'Room Capacity' : 'Room Capacity: ' + selectedCapacity + ' tenant(s)'
         dropDownRCContent.style.display = 'none'
         rcShow = false
     })
@@ -81,6 +82,7 @@ function activateClearRoomCapacityButton() {
                 }
                 if (count === roomCapacityListSize) {
                     roomCapacityClearButton.className = 'clear-button'
+                    dropDownRCButton.innerHTML = 'Room Capacity'
                 }
             }
         })
@@ -93,6 +95,7 @@ function clearRoomCapacity() {
             rcOptions[i].checked = false      
         }
         roomCapacityClearButton.className = 'clear-button'
+        dropDownRCButton.innerHTML = 'Room Capacity'
         console.log('cancel all query..')
     })
 }
@@ -112,7 +115,7 @@ const upperRangeScroll = findByID('upper-range-scroll')
 const lowerRangeInput = findByID('lower-range-input')
 const upperRangeInput = findByID('upper-range-input')
 
-const minPrice = 100
+const minPrice = 100, maxPrice = 1000
 
 showPriceDropDown()
 filterPriceRange()
@@ -135,17 +138,19 @@ function filterPriceRange() {
         console.log('proceed with query..' + lowerRange + ' ' + upperRange)
         dropDownPriceContent.style.display = 'none'
         priceShow = false
+        dropDownPriceButton.innerHTML = lowerRangeScroll.value == minPrice && upperRangeScroll.value == maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
     })
 }
 
 function clearPriceRange() {
     priceClearButton.addEventListener('click', () => {
         lowerRangeScroll.value = minPrice
-        upperRangeScroll.value = minPrice
+        upperRangeScroll.value = maxPrice
         lowerRangeInput.value = lowerRangeScroll.value
         upperRangeInput.value = upperRangeScroll.value
         priceClearButton.className = 'clear-button'
         console.log('cancel all query..')
+        dropDownPriceButton.innerHTML = 'Price'
     })
 }
 
@@ -174,8 +179,9 @@ function updateUpperRangePriceValue() {
 }
 
 function updateClearPriceRangeClassName() {
-    if (upperRangeScroll.value == minPrice && lowerRangeScroll.value == minPrice) {
+    if (upperRangeScroll.value == maxPrice && lowerRangeScroll.value == minPrice) {
         priceClearButton.className = 'clear-button'
+        dropDownPriceButton.innerHTML = 'Price'
         return
     }
     addAvailableToPriceBtnClassName()

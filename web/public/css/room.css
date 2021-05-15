@@ -5,10 +5,17 @@
     color: var(--primary-color);
 }
 
-.filter-wrapper, .option {
+.filter-wrapper {
     align-items: center;
     justify-content: center;
     display: flex;
+}
+
+.option {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    margin: 10px;
 }
 
 .filter-input {
@@ -27,7 +34,7 @@
 .fa-search:focus {outline: none}
 
 .fa-search {
-    background-color: #282a36;
+    background-color: crimson;
     padding: 10px;
     width: 10px;
     height: 10px;
@@ -67,16 +74,12 @@
 .save-button {
     color: var(--secondary-color);
     background-color:var(--primary-color);
-    float: right;
-    margin-left: 15px;
 }
 
 .clear-button {
     color: grey;
     background-color:var(--secondary-color);
     text-decoration: underline;
-    float: left;
-    margin-right: 15px;
 }
 
 .available {color: var(--primary-color) !important}
@@ -107,6 +110,7 @@
     padding: 12px 16px 12px 16px;
     text-decoration: none;
     display: block;
+    border-radius: 25px;
 }
 
 .room-capacity {
@@ -244,7 +248,9 @@
     outline: none;
     border-radius: 15px;
     border: none;
-    background-color: white;
+    background-color: transparent;
+    font-weight: 900;
+    font-size: 1.15em;
 }
 
 input[type="number"] {width: auto}
@@ -264,7 +270,7 @@ input[type="number"] {width: auto}
 
 
 /* content */
-.price, .available, .tenants, .address {
+.price-label, .available, .tenants, .address {
     font-weight: 900;
     font-size: 1.15em;
 }
@@ -292,12 +298,26 @@ input[type="number"] {width: auto}
 }
 
 @media (max-width: 400px) {
-    .fa-search {display: none !important}
+    .fa-search {
+        font-size: 0.75em !important;
+        padding: 7px;
+        width: 7px;
+        height: 7px;
+        margin: 1px 5px;
+    }
     .filter-input > label > input {margin: 5px 10px 5px 10px}
 }
 
+@media (max-width: 396px) {
+    .fa-search {margin: 0}
+}
+
 @media (max-width: 370px) {
-    .dropdown-content {margin-left: -30px !important;}
+    #non-campus-filter {
+        text-align: center;
+        display: block;
+    }
+    #price-range-dropdown-content {margin-left: -50px !important}
     .infos {display: block}
     .option > button, .price-wrapper > p {font-size: 0.8em}
     .contact-info, .accomodation-infos {margin-top: 25px}
@@ -318,13 +338,17 @@ input[type="number"] {width: auto}
         padding-left: 0;
     }
     .accomodation-info {width: 50%}
-    .title, .filter-input > label > input, .fa-search > label, .button {font-size: 0.85em}
-    .tenants, .price {font-size: 0.9em}
+    .title, .filter-input > label > input, .button {font-size: 0.9em}
+    .tenants, .price-label {font-size: 0.9em}
+}
+
+@media (max-width: 355px) {
+    input[type="number"] {width: 80%}
+    #price-range-dropdown-content {margin-left: 30px !important}
 }
 
 @media (max-width: 311px) {
-    .tenants, .price, .filter-input > label > input, .button {font-size: 0.8em}
+    .tenants, .price-label, .filter-input > label > input, .button {font-size: 0.8em}
     .button-wrapper {margin: 10px 0 10px 0}
     .price-wrapper {padding: 5px}
-    input[type="number"] {width: 80%}
 }
