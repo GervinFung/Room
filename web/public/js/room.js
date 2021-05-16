@@ -6,6 +6,7 @@ const AVAILABLE = ' available'
 const dropDownRCButton = findByID('room-capacity-button')
 const dropDownRCContent = findByID('room-capacity-dropdown-content')
 const roomCapacityListSize = findByID('room-capacity-list').children.length
+const dropDownRC = findByID('room-capacity-dropdown')
 const rcOptions = getAllRoomCapacityOption()
 
 function getAllRoomCapacityOption() {
@@ -33,7 +34,11 @@ clearRoomCapacity()
 activateClearRoomCapacityButton()
 
 function highlightActiveCampus() {
-    location.href.includes('room?campus=KP') ? changeClassName(KAMPAR, SGLONG) : changeClassName(SGLONG, KAMPAR)
+    if (location.href.includes('room?campus=KP')) {
+        changeClassName(KAMPAR, SGLONG)
+    } else if (location.href.includes('room?campus=SL')) {
+        changeClassName(SGLONG, KAMPAR)
+    }
 }
 
 function changeClassName(activeCampus, inactiveCampus) {
@@ -191,4 +196,20 @@ function addAvailableToPriceBtnClassName() {
     if (!priceClearButton.className.includes(AVAILABLE)) {
         priceClearButton.className += AVAILABLE
     }
+}
+
+closeDropdownContent()
+
+function closeDropdownContent() {
+    window.addEventListener('click', event => {
+        const target = event.target
+        detectClickOutsideOfDropdown(target, dropDownPrice, dropDownPriceContent, priceSaveButton, priceShow)
+        detectClickOutsideOfDropdown(target, dropDownRC, dropDownRCContent, roomCapacitySaveButton, rcShow)
+    })
+}
+
+function detectClickOutsideOfDropdown(target, dropdown, dropdownContent, saveButton, show) {
+    const isClickOutsideOrSaveBtn = (target !== dropdown && !dropdown.contains(target)) || target === saveButton
+    dropdownContent.style.display = isClickOutsideOrSaveBtn ? 'none' : 'block'
+    show = isClickOutsideOrSaveBtn ? false : true
 }
