@@ -1,0 +1,82 @@
+#waitingBackground {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.waiting-content {
+    margin: auto;
+    padding: 20px;
+    border: none;
+    background-color: transparent !important;
+    width: auto;
+    text-align: center;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+@media (max-width: 927px) {.waiting-content {width: 50vw}}
+
+/* loader */
+.loader {
+    border: 16px solid whitesmoke;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
+    -o-animation: spin 1s linear infinite;
+    -ms-animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg)}
+    25% {border-top: 16px solid #240b36;}
+    50% {border-right: 16px solid #240b36;}
+    75% {border-bottom: 16px solid #240b36;}
+    100% { border-left: 16px solid #240b36;transform: rotate(360deg)}
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { transform: rotate(0deg)}
+    25% {border-top: 16px solid #240b36;}
+    50% {border-right: 16px solid #240b36;}
+    75% {border-bottom: 16px solid #240b36;}
+    100% { border-left: 16px solid #240b36;transform: rotate(360deg)}
+}
+
+@-moz-keyframes spin {
+    0% { transform: rotate(0deg)}
+    25% {border-top: 16px solid #240b36;}
+    50% {border-right: 16px solid #240b36;}
+    75% {border-bottom: 16px solid #240b36;}
+    100% { border-left: 16px solid #240b36;transform: rotate(360deg)}
+}
+  
+@-o-keyframes spin {
+    0% { transform: rotate(0deg)}
+    25% {border-top: 16px solid #240b36;}
+    50% {border-right: 16px solid #240b36;}
+    75% {border-bottom: 16px solid #240b36;}
+    100% { border-left: 16px solid #240b36;transform: rotate(360deg)}
+}
+  
+@-ms-keyframes spin {
+    0% { transform: rotate(0deg)}
+    25% {border-top: 16px solid #240b36;}
+    50% {border-right: 16px solid #240b36;}
+    75% {border-bottom: 16px solid #240b36;}
+    100% { border-left: 16px solid #240b36;transform: rotate(360deg)}
+}

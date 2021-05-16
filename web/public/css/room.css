@@ -40,6 +40,7 @@
     height: 10px;
     text-decoration: none;
     margin: 5px 10px;
+    font-size: 0.9em !important;
     color: whitesmoke;
     border-radius: 50%;
 }
@@ -253,7 +254,7 @@
     font-size: 1.15em;
 }
 
-input[type="number"] {width: auto}
+input[type="text"] {width: auto}
 
 .price::-webkit-outer-spin-button, .price::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -312,7 +313,7 @@ input[type="number"] {width: auto}
     .fa-search {margin: 0}
 }
 
-@media (max-width: 370px) {
+@media (max-width: 386px) {
     #non-campus-filter {
         text-align: center;
         display: block;
@@ -342,8 +343,8 @@ input[type="number"] {width: auto}
     .tenants, .price-label {font-size: 0.9em}
 }
 
-@media (max-width: 355px) {
-    input[type="number"] {width: 80%}
+@media (max-width: 371px) {
+    input[type="text"] {width: 80% !important}
     #price-range-dropdown-content {margin-left: 30px !important}
 }
 

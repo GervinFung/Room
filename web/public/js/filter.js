@@ -1,7 +1,7 @@
 function insertNewInfo(info) {
-  const infoHTML = Handlebars.templates.room(info);
-  var infoContent = findByID('infos-content');
-  infoContent.insertAdjacentHTML('beforeend', infoHTML);
+  const infoHTML = Handlebars.templates.room(info)
+  const infoContent = findByID('infos-content')
+  infoContent.insertAdjacentHTML('beforeend', infoHTML)
 }
 
 function parseInfoElem(infoElem) {
@@ -40,17 +40,17 @@ function parseInfoElem(infoElem) {
     rooms.push(room)
   }
   info.rooms = rooms
-  return info;
+  return info
 }
 
 function roomsMatchQuery(rooms, query) {
   for (let i = 0; i < rooms.length; i++) {
     if (rooms[i].price >= query.min_price && rooms[i].price <= query.max_price) {
-      if (query.capacity.length == 0) {
+      if (query.capacity.length === 0) {
         return true
       }
       for (let j = 0; j < query.capacity.length; j++) {
-        if (rooms[i].capacity == query.capacity[j]) {
+        if (rooms[i].capacity === query.capacity[j]) {
           return true
         }
       }
@@ -87,26 +87,24 @@ function doSearchUpdate() {
     max_price: upperRangeScroll.value,
     capacity: getSelectedCapacity()
   }
-  var infoContainer = document.querySelector('.content');
+  const infoContainer = document.querySelector('.content')
   if (infoContainer) {
     while (infoContainer.lastChild) {
-      infoContainer.removeChild(infoContainer.lastChild);
+      infoContainer.removeChild(infoContainer.lastChild)
     }
   }
 
   allInfos.forEach((info) => {
     if (infoMatchesQuery(info, query)) {
       // console.log("inserting")
-      insertNewInfo(info);
+      insertNewInfo(info)
     }
-  });
+  })
 }
 
 allInfos = []
 
-let infosElemsCollection = document.getElementsByClassName('infos')
+const infosElemsCollection = document.getElementsByClassName('infos')
 for (let i = 0; i < infosElemsCollection.length; i++) {
   allInfos.push(parseInfoElem(infosElemsCollection[i]))
 }
-
-doSearchUpdate()

@@ -1,0 +1,63 @@
+#footer {
+    margin-top: 50px;
+    height: fit-content;
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+.copyright p {
+    font-size: 1.3em;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+}
+.social-link {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.fab {
+    padding: 20px;
+    width: 15px;
+    height: 15px;
+    text-decoration: none;
+    margin: 5px 10px;
+    color: whitesmoke;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.fab:focus {outline: none}
+  
+.fab:hover {
+    transform: rotate(360deg) scale(1.3);
+    background: whitesmoke;
+}
+
+.fa-facebook-f {background: #3B5998}
+.fa-facebook-f:hover {color: #3B5998}
+.fa-linkedin-in {background: #007bb5}
+.fa-linkedin-in:hover {color: #007bb5}
+
+.fa-instagram {
+    background: #f09433; 
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+}
+
+.fa-instagram:hover {color: #dc2743}
+.fa-tiktok {
+    text-shadow: 1px 2px crimson, -1px 1px #0ffbf9;
+    background-color: #14171A
+}
+.fa-tiktok:hover {
+    text-shadow: 1px 1px crimson, -1px 2px #0ffbf9;
+    color: #14171A
+}
+.fa-twitter {background-color:#1DA1F2}
+.fa-twitter:hover {color:#1DA1F2}
+.fa-github {background-color: #282a36}
+.fa-github:hover {color: #282a36}
+
+@media (max-width: 498px) {.social-link {display: block}}

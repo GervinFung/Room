@@ -26,9 +26,17 @@ function findByID(ID) {
     return document.getElementById(ID)
 }
 
+const waiting = findByID('waitingBackground')
+
+function displayLoading(time) {
+    waiting.style.display = 'flex'
+    setTimeout(() => {
+        waiting.style.display = 'none'
+    }, time)
+}
+
 highlightActiveCampus()
 
-showRoomCapacityDropDown()
 filterRoomCapacity()
 clearRoomCapacity()
 activateClearRoomCapacityButton()
@@ -46,15 +54,6 @@ function changeClassName(activeCampus, inactiveCampus) {
     inactiveCampus.className.replace(ACTIVE, '')
 }
 
-
-//show drop down
-function showRoomCapacityDropDown() {
-    dropDownRCButton.addEventListener('click', () => {
-        dropDownRCContent.style.display = rcShow ? 'none' : 'block'
-        rcShow = !rcShow
-    })
-}
-
 function getSelectedCapacity() {
   let selectedCapacity = []
   for (let i = 0; i < roomCapacityListSize; i++) {
@@ -62,11 +61,12 @@ function getSelectedCapacity() {
           selectedCapacity.push(i + 1)
       }
   }
-  return selectedCapacity
+  return Object.freeze(selectedCapacity)
 }
 
 function filterRoomCapacity() {
     roomCapacitySaveButton.addEventListener('click', () => {
+        displayLoading(150)
         doSearchUpdate()
         selectedCapacity = getSelectedCapacity()
         console.log('proceed with query..' + selectedCapacity)
@@ -128,29 +128,21 @@ const upperRangeInput = findByID('upper-range-input')
 
 const minPrice = 100, maxPrice = 1000
 
-showPriceDropDown()
+const numberRegex = /^\d+$/, nonNumberRegex = /[^\d]/g
+
 filterPriceRange()
 clearPriceRange()
 
-updateLowerRangePriceValue()
-updateUpperRangePriceValue()
-
-function showPriceDropDown() {
-    dropDownPriceButton.addEventListener('click', () => {
-        dropDownPriceContent.style.display = priceShow ? 'none' : 'block'
-        priceShow = !priceShow
-    })
-}
-
 function filterPriceRange() {
     priceSaveButton.addEventListener('click', () => {
+        displayLoading(150)
         doSearchUpdate()
         const lowerRange = lowerRangeScroll.value
         const upperRange = upperRangeScroll.value
         console.log('proceed with query..' + lowerRange + ' ' + upperRange)
         dropDownPriceContent.style.display = 'none'
         priceShow = false
-        dropDownPriceButton.innerHTML = lowerRangeScroll.value == minPrice && upperRangeScroll.value == maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
+        dropDownPriceButton.innerHTML = parseInt(lowerRangeScroll.value) === minPrice && parseInt(upperRangeScroll.value) === maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
     })
 }
 
@@ -166,41 +158,97 @@ function clearPriceRange() {
     })
 }
 
-function updateLowerRangePriceValue() {
-    lowerRangeInput.value = lowerRangeScroll.value
-    lowerRangeScroll.addEventListener('input', () => {
-        lowerRangeInput.value = lowerRangeScroll.value
+function updatePriceValue(priceInput, priceScroll) {
+    priceInput.value = priceScroll.value
+    addUpdatePriceListener(priceScroll, priceInput)
+    addInputPriceListener(priceInput, priceScroll)
+}
+
+function addInputPriceListener(inputElement, scrollElement) {
+    inputElement.addEventListener('input', () => {
+        if (!numberRegex.test(inputElement.value)) {
+            inputElement.value = inputElement.value.replace(nonNumberRegex, '')
+        }
         updateClearPriceRangeClassName()
+        scrollElement.value = inputElement.value
     })
-    lowerRangeInput.addEventListener('input', () => {
-        lowerRangeScroll.value = lowerRangeInput.value
+    inputElement.addEventListener('change', () => {
+        const isLower = inputElement === lowerRangeInput
+        const isUpper = inputElement === upperRangeInput
+        if (inputElement.value === null || inputElement.value.length === 0) {
+            if (isLower) {
+                inputElement.value = minPrice
+            } else if (isUpper) {
+                inputElement.value = maxPrice
+            }
+        } else {
+            const value = parseInt(inputElement.value)
+            if (isLower) {
+                const min = parseInt(inputElement.min)
+                const upperRange = parseInt(upperRangeInput.value)
+                if (value < min) {
+                    inputElement.value = min
+                } else if (value > upperRange) {
+                    inputElement.value = upperRange
+                }
+            }
+            else if (isUpper) {
+                const max = parseInt(inputElement.max)
+                const lowerRange = parseInt(lowerRangeInput.value)
+                if (value < lowerRange) {
+                    inputElement.value = lowerRange
+                } else if (value > max) {
+                    inputElement.value = max
+                }
+            }
+        }
+    })
+}
+
+function addUpdatePriceListener(scrollElement, inputElement) {
+    scrollElement.addEventListener('input', () => {
+        inputElement.value = scrollElement.value
         updateClearPriceRangeClassName()
     })
 }
 
-function updateUpperRangePriceValue() {
-    upperRangeInput.value = upperRangeScroll.value
-    upperRangeScroll.addEventListener('input', () => {
-        upperRangeInput.value = upperRangeScroll.value
-        updateClearPriceRangeClassName()
-    })
-    upperRangeInput.addEventListener('input', () => {
-        upperRangeScroll.value = upperRangeInput.value
-        updateClearPriceRangeClassName()
+updatePriceValue(lowerRangeInput, lowerRangeScroll)
+updatePriceValue(upperRangeInput, upperRangeScroll)
+
+updatePriceRange()
+
+function updatePriceRange() {
+    addUpdateUpperRangeListener(lowerRangeScroll)
+    addUpdateUpperRangeListener(lowerRangeInput)
+    addUpdateLowerRangeListener(upperRangeScroll)
+    addUpdateLowerRangeListener(upperRangeInput)
+}
+
+function addUpdateUpperRangeListener(elementToAddListener) {
+    elementToAddListener.addEventListener('change', () => {
+        const min = parseInt(elementToAddListener.value)
+        if (min === upperRangeScroll.min) {return}
+        upperRangeScroll.min = min
+        upperRangeInput.min = min
     })
 }
+
+function addUpdateLowerRangeListener(elementToAddListener) {
+    elementToAddListener.addEventListener('change', () => {
+        const max = parseInt(elementToAddListener.value)
+        if (max === lowerRangeScroll.max) {return}
+        lowerRangeScroll.max = max
+        lowerRangeInput.max = max
+    })
+}
+
 
 function updateClearPriceRangeClassName() {
-    if (upperRangeScroll.value == maxPrice && lowerRangeScroll.value == minPrice) {
+    if (parseInt(upperRangeScroll.value) == maxPrice && parseInt(lowerRangeScroll.value) == minPrice) {
         priceClearButton.className = 'clear-button'
         dropDownPriceButton.innerHTML = 'Price'
-        return
     }
-    addAvailableToPriceBtnClassName()
-}
-
-function addAvailableToPriceBtnClassName() {
-    if (!priceClearButton.className.includes(AVAILABLE)) {
+    else if (!priceClearButton.className.includes(AVAILABLE)) {
         priceClearButton.className += AVAILABLE
     }
 }
@@ -210,13 +258,31 @@ closeDropdownContent()
 function closeDropdownContent() {
     window.addEventListener('click', event => {
         const target = event.target
-        detectClickOutsideOfDropdown(target, dropDownPrice, dropDownPriceContent, priceSaveButton, priceShow)
-        detectClickOutsideOfDropdown(target, dropDownRC, dropDownRCContent, roomCapacitySaveButton, rcShow)
+        priceShow = detectClickOutsideOfDropdown(target, dropDownPrice, dropDownPriceContent, priceSaveButton, dropDownPriceButton, priceShow)
+        rcShow = detectClickOutsideOfDropdown(target, dropDownRC, dropDownRCContent, roomCapacitySaveButton, dropDownRCButton, rcShow)
     })
 }
 
-function detectClickOutsideOfDropdown(target, dropdown, dropdownContent, saveButton, show) {
-    const isClickOutsideOrSaveBtn = (target !== dropdown && !dropdown.contains(target)) || target === saveButton
-    dropdownContent.style.display = isClickOutsideOrSaveBtn ? 'none' : 'block'
-    show = isClickOutsideOrSaveBtn ? false : true
+function detectClickOutsideOfDropdown(target, dropdown, dropdownContent, saveButton, dropDownButton, show) {
+    if (target === dropDownButton) {
+        dropdownContent.style.display = show ? 'none' : 'block'
+        return !show
+    } else {
+        const isClickOutsideOrSaveBtn = (target !== dropdown && !dropdown.contains(target)) || target === saveButton
+        dropdownContent.style.display = isClickOutsideOrSaveBtn ? 'none' : 'block'
+        return isClickOutsideOrSaveBtn ? false : true
+    }
+}
+
+const advancedSearch = findByID('advanced-search')
+
+startSearch()
+
+function startSearch() {
+    advancedSearch.addEventListener('keyup', event => {
+        if (event.key === 'Enter') {
+            displayLoading(500)
+            console.log('Enter pressed')
+        }
+    })
 }

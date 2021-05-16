@@ -1,16 +1,23 @@
-const path = require('path')
 const express = require('express')
 const exphbs = require('express-handlebars')
 const MongoClient = require('mongodb').MongoClient
 const config = require('./config.js')
-const moment = require('moment')
 
 const app = express()
 const port = 8000
 
 let db = null
 
-const hbs = exphbs.create({defaultView: "main"})
+const hbs = exphbs.create({defaultView: 'main'})
+
+const socialLinks = [
+  { link: 'https://www.tiktok.com/@utarnet?lang=en', class: 'fab fa-tiktok' },
+  { link: 'https://twitter.com/utarnet?lang=en', class: 'fab fa-twitter' },
+  { link: 'https://www.linkedin.com/school/universiti-tunku-abdul-rahman/?originalSubdomain=my/', class: 'fab fa-linkedin-in' },
+  { link: 'https://www.facebook.com/UTARnet/', class: 'fab fa-facebook-f' },
+  { link: 'https://www.instagram.com/utarnet1/?hl=en/', class: 'fab fa-instagram' },
+  { link: 'https://github.com/GervinFung/Room/tree/nodejs', class: 'fab fa-github' }
+]
 
 app.engine('handlebars', hbs.engine)
 
@@ -21,7 +28,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res, next) => {
-  res.status(200).sendFile(path.resolve('./public/html/index.html'))
+  res.status(200).render('page/index', {socialLinks})
 })
 
 app.get('/room', (req, res, next) => {
@@ -33,7 +40,7 @@ app.get('/room', (req, res, next) => {
         error: 'Error fetching campus from database'
       })
     } else {
-      res.status(200).render('roomPage', {places})
+      res.status(200).render('page/roomPage', {places, socialLinks})
     }
   })
 })
