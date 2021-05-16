@@ -55,14 +55,20 @@ function showRoomCapacityDropDown() {
     })
 }
 
+function getSelectedCapacity() {
+  let selectedCapacity = []
+  for (let i = 0; i < roomCapacityListSize; i++) {
+      if (rcOptions[i].checked) {
+          selectedCapacity.push(i + 1)
+      }
+  }
+  return selectedCapacity
+}
+
 function filterRoomCapacity() {
     roomCapacitySaveButton.addEventListener('click', () => {
-        let selectedCapacity = []
-        for (let i = 0; i < roomCapacityListSize; i++) {
-            if (rcOptions[i].checked) {
-                selectedCapacity.push(i + 1)
-            }
-        }
+        doSearchUpdate()
+        selectedCapacity = getSelectedCapacity()
         console.log('proceed with query..' + selectedCapacity)
         dropDownRCButton.innerHTML = selectedCapacity.length === 0 ? 'Room Capacity' : 'Room Capacity: ' + selectedCapacity + ' tenant(s)'
         dropDownRCContent.style.display = 'none'
@@ -97,7 +103,7 @@ function activateClearRoomCapacityButton() {
 function clearRoomCapacity() {
     roomCapacityClearButton.addEventListener('click', () => {
         for (let i = 0; i < roomCapacityListSize; i++) {
-            rcOptions[i].checked = false      
+            rcOptions[i].checked = false
         }
         roomCapacityClearButton.className = 'clear-button'
         dropDownRCButton.innerHTML = 'Room Capacity'
@@ -138,6 +144,7 @@ function showPriceDropDown() {
 
 function filterPriceRange() {
     priceSaveButton.addEventListener('click', () => {
+        doSearchUpdate()
         const lowerRange = lowerRangeScroll.value
         const upperRange = upperRangeScroll.value
         console.log('proceed with query..' + lowerRange + ' ' + upperRange)
