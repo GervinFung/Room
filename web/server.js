@@ -10,13 +10,10 @@ const port = 8000
 
 let db = null
 
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main',
-  helpers: {
-    formatDate: (date, format) => {
-      return moment(date).format(format)
-    }
-  }}))
+const hbs = exphbs.create({defaultView: "main"})
+
+app.engine('handlebars', hbs.engine)
+
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
