@@ -28,8 +28,8 @@ def insert_room(accom_dict, room_column):
             room_dict = {}
             room = info.next_sibling.strip().split('\xa0/\xa0')
             room_dict['type'] = room[0].split(' ')[0]
-            room_dict['price'] = room[1].split('\xa0')[1]
-            room_dict['capacity'] = room[2].strip('person')[0]
+            room_dict['price'] = int(room[1].split('\xa0')[1])
+            room_dict['capacity'] = int(room[2].strip('person')[0])
             room_list.append(room_dict)
 
     accom_dict['rooms'] = room_list
@@ -50,16 +50,17 @@ def insert_location(accom_dict, location_column, fcode):
 
 
 def insert_remark(accom_dict, remark_column):
-    # available_from = {}
+    available_from = {}
     availability = remark_column.next_element.strip().split(' ')
     remarks = remark_column.next_element.next_element.next_element.strip()
     remarks = remarks.replace('\r\n', ' ')
     remarks = remarks.replace('  ', ' ')
     # available_from['month'] = datetime.datetime.strptime(availability[2], '%b').month
-    # available_from['year'] = availability[3]
-    year = int(availability[3])
-    month = datetime.datetime.strptime(availability[2], '%b').month
-    available_from = datetime.datetime(year, month, 1)
+    available_from['month'] = availability[2]
+    available_from['year'] = int(availability[3])
+    # year = int(availability[3])
+    # month = datetime.datetime.strptime(availability[2], '%b').month
+    # available_from = datetime.datetime(year, month, 1)
     accom_dict['available_from'] = available_from
     accom_dict['remarks'] = remarks
 
