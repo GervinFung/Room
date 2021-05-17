@@ -25,9 +25,6 @@
             </div>
         </div>
         <div class="filter-wrapper" id="non-campus-filter">
-            <div id="saved">
-                <a href="saved" class="button" id="saved-button">Saved</a>
-            </div>
             <div class="dropdown" id="price-range-dropdown">
                 <button id="price-range-button" class="button">Price</button>
                 <div class="dropdown-content" id="price-range-dropdown-content">
@@ -68,11 +65,14 @@
                 </div>
             </div>
         </div>
+        <div class="download-wrapper">
+            <a href=".files/saved.txt" download class="button" id="download-txt-button">Download as Text File</a>
+            <a href=".files/saved.html" download class="button" id="download-html-button">Download as HTML File</a>
+            <a href=".files/saved.pdf" download class="button" id="download-pdf-button">Download as PDF File</a>
+        </div>
     </div>
     <div class="content" id="infos-content">
-      {{#each places}}
-        {{> room}}
-      {{/each}}
+      {{savedRoom}}
     </div>
     <div id="waitingBackground">
         <div class="waiting-content">

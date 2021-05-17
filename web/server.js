@@ -45,6 +45,10 @@ app.get('/room', (req, res, next) => {
   })
 })
 
+app.get('/saved', (req, res, next) => {
+  res.status(200).render('page/saved', {socialLinks})
+})
+
 MongoClient.connect(config.url, {useNewUrlParser: true, useUnifiedTopology: true},  (err, client) => {
   if(err) {
     console.error('Failed to connect database')

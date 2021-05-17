@@ -5,7 +5,7 @@
     color: var(--primary-color);
 }
 
-.filter-wrapper {
+.filter-wrapper, .download-wrapper {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -47,7 +47,7 @@
 
 .button-wrapper {margin: 20px}
 
-.button-wrapper:hover, .dropdown > button:hover {
+.button-wrapper:hover, .dropdown > button:hover, .download-wrapper > a:hover, #saved > a:hover {
     transform: scale(1.1);
     transition: ease-in-out 0.2s;
 }
@@ -265,13 +265,8 @@ input[type="text"] {width: auto}
 
 
 
-
-
-
-
-
 /* content */
-.price-label, .available, .tenants, .address {
+.price-label, .available, .tenants, .address, .facilities {
     font-weight: 900;
     font-size: 1.15em;
 }
@@ -281,20 +276,22 @@ input[type="text"] {width: auto}
     align-items: center;
     justify-content: space-evenly;
     display: flex;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
 }
 
 .infos:hover {background-color: azure}
 
-.vital-info {width: 75%}
-.less-vital-info {width: 20%}
-
+.vital-info {width: 70%}
+.less-vital-info {width: 30%}
 .info {margin: 16px}
-.address-info {margin-bottom: 25px}
+.address-info, .remarks-info {margin-bottom: 25px}
 .accomodation-infos {border-top: 2px solid gray}
 .option {border-top: 1px solid lightslategray}
 
-@media (max-width: 771px) and (min-width: 370px) {
-    .vital-info {width: 75%}
+@media (max-width: 787px) {
+    .vital-info {width: 60%}
     .less-vital-info {width: 40%}
 }
 
@@ -309,21 +306,19 @@ input[type="text"] {width: auto}
     .filter-input > label > input {margin: 5px 10px 5px 10px}
 }
 
-@media (max-width: 396px) {
-    .fa-search {margin: 0}
-}
+@media (max-width: 396px) {.fa-search {margin: 0}}
 
-@media (max-width: 386px) {
+@media (max-width: 594px) {
+    .infos {display: block}
     #non-campus-filter {
         text-align: center;
         display: block;
     }
-    #price-range-dropdown-content {margin-left: -50px !important}
-    .infos {display: block}
-    .option > button, .price-wrapper > p {font-size: 0.8em}
-    .contact-info, .accomodation-infos {margin-top: 25px}
     .vital-info, .less-vital-info {width: 100%}
-    .info {text-align: center}
+    .info {
+        text-align: center;
+        margin: 0
+    }
     .accomodation-infos {
         border-top: none;
         width: 100%;
@@ -339,6 +334,13 @@ input[type="text"] {width: auto}
         padding-left: 0;
     }
     .accomodation-info {width: 50%}
+    .room-type {font-size: 1.2em}
+}
+
+@media (max-width: 386px) {
+    #price-range-dropdown-content {margin-left: -50px !important}
+    .option > button, .price-wrapper > p {font-size: 0.85em}
+    .contact-info, .accomodation-infos {margin-top: 25px}
     .title, .filter-input > label > input, .button {font-size: 0.9em}
     .tenants, .price-label {font-size: 0.9em}
 }
@@ -346,10 +348,15 @@ input[type="text"] {width: auto}
 @media (max-width: 371px) {
     input[type="text"] {width: 80% !important}
     #price-range-dropdown-content {margin-left: 30px !important}
+    #advanced-search {margin: 0}
 }
+
+@media (max-width: 355px) {p {font-size: 0.85em}}
 
 @media (max-width: 311px) {
     .tenants, .price-label, .filter-input > label > input, .button {font-size: 0.8em}
     .button-wrapper {margin: 10px 0 10px 0}
     .price-wrapper {padding: 5px}
 }
+
+@media (max-width: 298px) {p {font-size: 0.75em}}
