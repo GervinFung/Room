@@ -1,0 +1,23 @@
+{
+  "name": "utar_accom",
+  "version": "1.0.0",
+  "description": "nodejs server for the website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "build": "handlebars views/partials/room.handlebars -f public/js/roomTemplate.js",
+    "prestart": "npm run build"
+  },
+  "author": "PoolOfDeath, Eugene Yong",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.13.2",
+    "express-handlebars": "^5.3.2",
+    "handlebars": "^4.7.7",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.6"
+  },
+  "repository": "Room"
+}

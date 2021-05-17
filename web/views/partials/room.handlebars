@@ -1,0 +1,37 @@
+<div class="infos">
+    <div class="vital-info">
+        <address class="address-info info">
+            <h1 class="address">Address</h1>
+            <p>{{address}}</p>
+        </address>
+        <div class="remarks-info info">
+            <div>
+                <p class="available">Available From: {{available_from.month}} {{available_from.year}}</p>
+            </div>
+            <div>
+                <p>{{remarks}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="less-vital-info">
+        <div class="contact-info info">
+            <h2>Contact Details</h2>
+            <p>{{name}}</p>
+            <p>{{hp_no}}</p>
+            <p>{{email}}</p>
+        </div>
+        <div class="accomodation-infos info">
+            {{#each rooms}}
+            <div class="accomodation-info">
+                <div>
+                    <p>{{type}}</p>
+                    <ul>
+                        <li class="tenants">{{capacity}} tenants</li>
+                        <li class="price-label">&#36;{{price}} / tenant</li>
+                    </ul>
+                </div>
+            </div>
+          {{/each}}
+        </div>
+    </div>
+</div>

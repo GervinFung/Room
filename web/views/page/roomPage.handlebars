@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="./css/room.css">
+<link rel="stylesheet" href="./css/waiting.css">
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="../img/index.jpg" alt="">
+        </div>
+        <div class="title">
+            <h2>Accomodation Listing</h2>
+        </div>
+        <div class="filter-wrapper">
+            <div class="filter-input">
+                <i class="fa fa-search"></i>
+                <label>
+                    <input type="text" name="advanced-search" id="advanced-search" placeholder="Type here to search" autofocus>
+                </label>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="button-wrapper">
+                 <a href="room?campus=KP" class="button" id="kampar">Kampar</a>
+            </div>
+            <div class="button-wrapper">
+                <a href="room?campus=SL" class="button" id="sg-long">Sg Long</a>
+            </div>
+        </div>
+        <div class="filter-wrapper" id="non-campus-filter">
+            <div class="dropdown" id="price-range-dropdown">
+                <button id="price-range-button" class="button">Price</button>
+                <div class="dropdown-content" id="price-range-dropdown-content">
+                    <div id="price-range-list">
+                        <div class="range">
+                            <input type="range" min="100" max="1000" value="100" class="slider" id="lower-range-scroll">
+                            <div class="price-wrapper">
+                                <p>min price</p>
+                                <label><span>RM</span><input min="100" max="1000" type="text" id="lower-range-input" class="price"></label>
+                            </div>
+                        </div>
+                        <div class="range">
+                            <input type="range" min="100" max="1000" value="1000" class="slider" id="upper-range-scroll">
+                            <div class="price-wrapper">
+                                <p>max price</p>
+                                <label><span>RM</span><input min="100" max="1000" type="text" id="upper-range-input" class="price"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <button id="price-clear-button" class="clear-button">Clear</button>
+                        <button id="price-save-button" class="save-button">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown" id="room-capacity-dropdown">
+                <button id="room-capacity-button" class="button">Room Capacity</button>
+                <div class="dropdown-content" id="room-capacity-dropdown-content">
+                    <div id="room-capacity-list">
+                        <label><input type="checkbox" id="capacity-1"><span class="room-capacity">1 Tenant</span></label>
+                        <label><input type="checkbox" id="capacity-2"><span class="room-capacity">2 Tenant</span></label>
+                        <label><input type="checkbox" id="capacity-3"><span class="room-capacity">3 Tenant</span></label>
+                    </div>
+                    <div class="option">
+                        <button id="rc-clear-button" class="clear-button">Clear</button>
+                        <button id="rc-save-button" class="save-button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content" id="infos-content">
+      {{#each places}}
+        {{> room}}
+      {{/each}}
+    </div>
+    <div id="waitingBackground">
+        <div class="waiting-content">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>
+<script src="../js/room.js"></script>

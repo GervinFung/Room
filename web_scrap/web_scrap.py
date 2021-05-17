@@ -28,20 +28,24 @@ def insert_room(accom_dict, room_column):
             room_dict = {}
             room = info.next_sibling.strip().split('\xa0/\xa0')
             room_dict['type'] = room[0].split(' ')[0]
-            room_dict['price'] = room[1].split('\xa0')[1]
-            room_dict['capacity'] = room[2].strip('person')[0]
+            room_dict['price'] = int(room[1].split('\xa0')[1])
+            room_dict['capacity'] = int(room[2].strip('person')[0])
             room_list.append(room_dict)
 
     accom_dict['rooms'] = room_list
 
 
-def insert_location(accom_dict, location_column):
+def insert_location(accom_dict, location_column, fcode):
     all_location_column = location_column.find_all(True)
-    address = ""
+    address = ''
     for info in all_location_column:
         address += info.next_sibling.strip()
-    address = address.replace('\r\n', '')
-    address = address.replace(',,', ', ')
+    address = address.replace(',,', ',').replace(', ', ',').replace('\r\n', '').replace(' ,', '')
+    if fcode == 'KP':
+        address = address.rsplit('Kampar', 1)[0].replace('Kampar', '')
+    elif fcode == 'SL':
+        address = address.rsplit('Kajang', 1)[0].replace('Kajang', '').rsplit('Selangor', 1)[0].replace('Selangor', '')
+    address = address.strip().replace(',', ', ').replace('.,', '').replace(' , ', '').replace('  ', ' ')
     accom_dict['address'] = address
 
 
@@ -51,10 +55,15 @@ def insert_remark(accom_dict, remark_column):
     remarks = remark_column.next_element.next_element.next_element.strip()
     remarks = remarks.replace('\r\n', ' ')
     remarks = remarks.replace('  ', ' ')
-    available_from['month'] = datetime.datetime.strptime(availability[2], '%b').month
-    available_from['year'] = availability[3]
+    # available_from['month'] = datetime.datetime.strptime(availability[2], '%b').month
+    available_from['month'] = availability[2]
+    available_from['year'] = int(availability[3])
+    # year = int(availability[3])
+    # month = datetime.datetime.strptime(availability[2], '%b').month
+    # available_from = datetime.datetime(year, month, 1)
     accom_dict['available_from'] = available_from
     accom_dict['remarks'] = remarks
+
 
 def insert_facilities(accom_dict, detail_url):
     # print(detail_url)
@@ -69,7 +78,7 @@ def insert_facilities(accom_dict, detail_url):
 
     facilities_list = []
     for facility in facilities:
-        if facility.text != "Facilities:" and facility.text != "Others:":
+        if facility.text != 'Facilities:' and facility.text != 'Others:':
             facilities_list.append(facility.text)
 
     others = facilities_list.pop().split(', ')
@@ -78,10 +87,11 @@ def insert_facilities(accom_dict, detail_url):
     accom_dict['facilities'] = facilities_list
     page.close()
 
+
 def insert_to_database(rooms):
-    username = "eugeneyjy"
-    password = "Dnthackmepls78"
-    uri = "mongodb+srv://" + username + ":" + password + "@room.88id4.mongodb.net/accom?retryWrites=true&w=majority"
+    username = 'eugeneyjy'
+    password = 'Dnthackmepls78'
+    uri = 'mongodb+srv://' + username + ':' + password + '@room.88id4.mongodb.net/utar_accom?retryWrites=true&w=majority'
     client = MongoClient(uri)
     db = client.utar_accom
     room_collection = db.room
@@ -114,7 +124,7 @@ def main():
                 elif i == 2:
                     insert_room(accom_dict, column)
                 elif i == 3:
-                    insert_location(accom_dict, column)
+                    insert_location(accom_dict, column, fcode)
                 elif i == 4:
                     insert_remark(accom_dict, column)
                 i += 1
