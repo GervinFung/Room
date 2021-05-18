@@ -17,7 +17,7 @@ function getAllRoomCapacityOption() {
     return Object.freeze(options)
 }
 
-const roomCapacitySaveButton = findByID('rc-save-button')
+const roomCapacitySaveButton = findByID('rc-search-button')
 const roomCapacityClearButton = findByID('rc-clear-button')
 
 let rcShow = false
@@ -26,12 +26,17 @@ function findByID(ID) {
     return document.getElementById(ID)
 }
 
+const firstEscapeChar = /[\[]/, secondEscapeChar = '\\['
+const firstEscapeCharReplace = /[\]]/, secondEscapeCharReplace = '\\]'
+const plusSignRegex = /\+/g
+const regUrl = '[\\?&]'
+const exUrl = '=([^&#]*)'
+
 function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
+    name = name.replace(firstEscapeChar, secondEscapeChar).replace(firstEscapeCharReplace, secondEscapeCharReplace)
+    const results = new RegExp(regUrl + name + exUrl).exec(location.search)
+    return results === null ? '' : decodeURIComponent(results[1].replace(plusSignRegex, ' '))
+}
 
 const waiting = findByID('waitingBackground')
 
@@ -81,9 +86,9 @@ function getMaxPrice() {
 }
 
 function highlightActiveCampus() {
-    if (getUrlParameter('campus') == 'KP') {
+    if (getUrlParameter('campus') === 'KP') {
         changeClassName(KAMPAR, SGLONG)
-    } else if (getUrlParameter('campus') == 'SL') {
+    } else if (getUrlParameter('campus') === 'SL') {
         changeClassName(SGLONG, KAMPAR)
     }
 }
@@ -108,11 +113,12 @@ function filterRoomCapacity() {
         displayLoading(150)
         // doSearchUpdate()
         selectedCapacity = getSelectedCapacity()
-        console.log('proceed with query..' + selectedCapacity)
         setRoomCapacityHTML(selectedCapacity)
         dropDownRCContent.style.display = 'none'
         rcShow = false
         redirectFilter()
+        console.log('proceed with query..' + selectedCapacity)
+        doSearchUpdate()
     })
 }
 
@@ -162,7 +168,7 @@ const dropDownPrice = findByID('price-range-dropdown')
 const dropDownPriceContent = findByID('price-range-dropdown-content')
 
 const priceClearButton = findByID('price-clear-button')
-const priceSaveButton = findByID('price-save-button')
+const priceSaveButton = findByID('price-search-button')
 
 const lowerRangeScroll = findByID('lower-range-scroll')
 const upperRangeScroll = findByID('upper-range-scroll')

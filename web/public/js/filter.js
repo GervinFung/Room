@@ -1,6 +1,7 @@
+const infoContent = findByID('infos-content')
+
 function insertNewInfo(info) {
   const infoHTML = Handlebars.templates.room(info)
-  const infoContent = findByID('infos-content')
   infoContent.insertAdjacentHTML('beforeend', infoHTML)
 }
 
@@ -69,6 +70,7 @@ function doSearchUpdate() {
     max_price: upperRangeScroll.value,
     capacity: getSelectedCapacity()
   }
+  console.log(query)
   const infoContainer = document.querySelector('.content')
   if (infoContainer) {
     while (infoContainer.lastChild) {
@@ -82,9 +84,10 @@ function doSearchUpdate() {
       insertNewInfo(info)
     }
   })
+  console.log(infoContent.innerHTML)
 }
 
-allInfos = []
+let allInfos = []
 
 const infosElemsCollection = document.getElementsByClassName('infos')
 for (let i = 0; i < infosElemsCollection.length; i++) {

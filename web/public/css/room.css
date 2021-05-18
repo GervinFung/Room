@@ -72,7 +72,7 @@
     border: 3px solid var(--primary-color);
 }
 
-.save-button {
+.search-button {
     color: var(--secondary-color);
     background-color:var(--primary-color);
 }
@@ -289,6 +289,41 @@ input[type="text"] {width: auto}
 .address-info, .remarks-info {margin-bottom: 25px}
 .accomodation-infos {border-top: 2px solid gray}
 .option {border-top: 1px solid lightslategray}
+
+#saved-dialog {
+    position: absolute;
+    display: none;
+    border: 1px solid black;
+    padding: 6px 16px 6px 16px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    animation: fade 0.25s linear;
+    -webkit-animation: fade 0.25s linear;
+    -o-animation: fade 0.25s linear;
+    -moz-animation: fade 0.25s linear;
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-webkit-keyframes  fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-o-keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-ms-keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-moz-keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+
 
 @media (max-width: 787px) {
     .vital-info {width: 60%}

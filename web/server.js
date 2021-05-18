@@ -31,13 +31,14 @@ app.get('/', (req, res, next) => {
   res.status(200).render('page/index', {socialLinks})
 })
 
+let set = {}
+
 app.get('/room', (req, res, next) => {
   const toNumbers = arr => arr.map(Number)
   const campus = req.query.campus
   const minPrice = req.query.min
   const maxPrice = req.query.max
   let capacity = []
-  let set = {}
   if (req.query.cap) {
     if (typeof(req.query.cap) === 'string') {
       capacity = [parseInt(req.query.cap)]
@@ -110,7 +111,7 @@ app.get('/room', (req, res, next) => {
 })
 
 app.get('/saved', (req, res, next) => {
-  res.status(200).render('page/saved', {socialLinks})
+  res.status(200).render('page/saved', {socialLinks, set})
 })
 
 MongoClient.connect(config.url, {useNewUrlParser: true, useUnifiedTopology: true},  (err, client) => {
