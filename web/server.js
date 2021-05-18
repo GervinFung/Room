@@ -32,15 +32,79 @@ app.get('/', (req, res, next) => {
 })
 
 app.get('/room', (req, res, next) => {
+  const toNumbers = arr => arr.map(Number)
   const campus = req.query.campus
+  const minPrice = req.query.min
+  const maxPrice = req.query.max
+  let capacity = []
+  let set = {}
+  if (req.query.cap) {
+    if (typeof(req.query.cap) === 'string') {
+      capacity = [parseInt(req.query.cap)]
+    } else {
+      capacity = toNumbers(req.query.cap)
+    }
+  }
+  let query = {}
+  if (campus) {
+    query['campus'] = campus
+  }
+  if (minPrice || maxPrice) {
+    query['rooms.price'] = {}
+    if (minPrice) {
+      query['rooms.price'].$gte = parseInt(minPrice)
+    }
+    if (maxPrice) {
+      query['rooms.price'].$lte = parseInt(maxPrice)
+    }
+  }
+  if (capacity.length != 0) {
+    query['rooms.capacity'] = {}
+    query['rooms.capacity'].$in = capacity
+  }
   const collection = db.collection(config.collection)
-  collection.find({campus: campus}).toArray((err, places) => {
-    if(err) {
+  collection.aggregate([
+    {
+      $match: {'campus': campus}
+    },
+    {
+      $group:
+      {
+        '_id': null,
+        'minPrice': {'$min': {'$min': '$rooms.price'} },
+        'maxPrice': {'$max': {'$max' : '$rooms.price'} }
+      }
+    }
+  ]).toArray((err, minmax) => {
+    if (err) {
       res.status(500).send({
         error: 'Error fetching campus from database'
       })
     } else {
-      res.status(200).render('page/roomPage', {places, socialLinks})
+      set.minmin = minmax[0].minPrice
+      set.maxmax = minmax[0].maxPrice
+    }
+  })
+  let cap = collection.distinct('rooms.capacity', {campus: campus})
+  cap.then((result) => {
+    let checked = []
+    for (let i = 0; i < result.length; i++) {
+      if (capacity.includes(result[i])) {
+        checked.push(1)
+      } else {
+        checked.push(0)
+      }
+    }
+    set.cap = result
+    set.checkedCap = checked
+  })
+  collection.find(query).toArray((err, places) => {
+    if (err) {
+      res.status(500).send({
+        error: 'Error fetching campus from database'
+      })
+    } else {
+      res.status(200).render('page/roomPage', {places, socialLinks, set})
     }
   })
 })

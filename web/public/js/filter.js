@@ -60,24 +60,6 @@ function roomsMatchQuery(rooms, query) {
 }
 
 function infoMatchesQuery(info, query) {
-  // let price_match = false
-  // let capacity_match = false
-  // if (query.min_price && query.max_price) {
-  //   if (roomsMatchPrice(info.rooms, query.min_price, query.max_price)) {
-  //     price_match = true
-  //   }
-  // } else {
-  //   price_match = true
-  // }
-  //
-  // if (query.capacity) {
-  //   if (roomsMatchCapacity(info.rooms, query.capacity)) {
-  //     capacity_match = true
-  //   }
-  // } else {
-  //   capacity_match = true
-  // }
-
   return roomsMatchQuery(info.rooms, query)
 }
 

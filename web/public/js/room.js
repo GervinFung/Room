@@ -12,7 +12,7 @@ const rcOptions = getAllRoomCapacityOption()
 function getAllRoomCapacityOption() {
     let options = []
     for (let i = 0; i < roomCapacityListSize; i++) {
-        options.push(document.getElementById('capacity-' + (i + 1)))
+        options.push(document.getElementById('capacity-' + (i)))
     }
     return Object.freeze(options)
 }
@@ -25,6 +25,13 @@ let rcShow = false
 function findByID(ID) {
     return document.getElementById(ID)
 }
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 
 const waiting = findByID('waitingBackground')
 
@@ -40,11 +47,43 @@ highlightActiveCampus()
 filterRoomCapacity()
 clearRoomCapacity()
 activateClearRoomCapacityButton()
+setRoomCapacityHTML(getSelectedCapacity())
+
+function redirectFilter() {
+  window.location.search = getQueryString()
+}
+
+function getQueryString() {
+  const campusQ = 'campus=' + getActiveCampus()
+  const minPriceQ = 'min=' + getMinPrice()
+  const maxPriceQ = 'max=' + getMaxPrice()
+  let capacityQ = ''
+  let capacity = getSelectedCapacity()
+  for (let i = 0; i < capacity.length; i++) {
+    capacityQ += 'cap=' + capacity[i]
+    if (i != capacity.length-1) {
+      capacityQ += '&'
+    }
+  }
+  return '?' + campusQ + '&' + minPriceQ + '&' + maxPriceQ + '&' + capacityQ
+}
+
+function getActiveCampus() {
+  return getUrlParameter('campus')
+}
+
+function getMinPrice() {
+  return lowerRangeScroll.value
+}
+
+function getMaxPrice() {
+  return upperRangeScroll.value
+}
 
 function highlightActiveCampus() {
-    if (location.href.includes('room?campus=KP')) {
+    if (getUrlParameter('campus') == 'KP') {
         changeClassName(KAMPAR, SGLONG)
-    } else if (location.href.includes('room?campus=SL')) {
+    } else if (getUrlParameter('campus') == 'SL') {
         changeClassName(SGLONG, KAMPAR)
     }
 }
@@ -58,7 +97,7 @@ function getSelectedCapacity() {
   let selectedCapacity = []
   for (let i = 0; i < roomCapacityListSize; i++) {
       if (rcOptions[i].checked) {
-          selectedCapacity.push(i + 1)
+          selectedCapacity.push(i)
       }
   }
   return Object.freeze(selectedCapacity)
@@ -67,12 +106,13 @@ function getSelectedCapacity() {
 function filterRoomCapacity() {
     roomCapacitySaveButton.addEventListener('click', () => {
         displayLoading(150)
-        doSearchUpdate()
+        // doSearchUpdate()
         selectedCapacity = getSelectedCapacity()
         console.log('proceed with query..' + selectedCapacity)
-        dropDownRCButton.innerHTML = selectedCapacity.length === 0 ? 'Room Capacity' : 'Room Capacity: ' + selectedCapacity + ' tenant(s)'
+        setRoomCapacityHTML(selectedCapacity)
         dropDownRCContent.style.display = 'none'
         rcShow = false
+        redirectFilter()
     })
 }
 
@@ -111,6 +151,10 @@ function clearRoomCapacity() {
     })
 }
 
+function setRoomCapacityHTML(selectedCapacity) {
+  dropDownRCButton.innerHTML = selectedCapacity.length === 0 ? 'Room Capacity' : 'Room Capacity: ' + selectedCapacity + ' tenant(s)'
+}
+
 let priceShow = false
 
 const dropDownPriceButton = findByID('price-range-button')
@@ -126,10 +170,11 @@ const upperRangeScroll = findByID('upper-range-scroll')
 const lowerRangeInput = findByID('lower-range-input')
 const upperRangeInput = findByID('upper-range-input')
 
-const minPrice = 100, maxPrice = 1000
+const minPrice = lowerRangeInput.min, maxPrice = upperRangeInput.max
 
 const numberRegex = /^\d+$/, nonNumberRegex = /[^\d]/g
 
+setPriceRangeHTML()
 filterPriceRange()
 clearPriceRange()
 
@@ -143,6 +188,7 @@ function filterPriceRange() {
         dropDownPriceContent.style.display = 'none'
         priceShow = false
         dropDownPriceButton.innerHTML = parseInt(lowerRangeScroll.value) === minPrice && parseInt(upperRangeScroll.value) === maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
+        redirectFilter()
     })
 }
 
@@ -156,6 +202,25 @@ function clearPriceRange() {
         console.log('cancel all query..')
         dropDownPriceButton.innerHTML = 'Price'
     })
+}
+
+function setPriceRangeHTML() {
+  console.log(getUrlParameter('cap'))
+  const min = getUrlParameter('min')
+  const max = getUrlParameter('max')
+  if (min) {
+    lowerRangeScroll.value = parseInt(min)
+  } else {
+    lowerRangeScroll.value = minPrice
+  }
+  if (max) {
+    upperRangeScroll.value = parseInt(max)
+  } else {
+    upperRangeScroll.value = maxPrice
+  }
+  const lowerRange = lowerRangeScroll.value
+  const upperRange = upperRangeScroll.value
+  dropDownPriceButton.innerHTML = parseInt(lowerRange) == minPrice && parseInt(upperRange) == maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
 }
 
 function updatePriceValue(priceInput, priceScroll) {

@@ -33,17 +33,17 @@
                 <div class="dropdown-content" id="price-range-dropdown-content">
                     <div id="price-range-list">
                         <div class="range">
-                            <input type="range" min="100" max="1000" value="100" class="slider" id="lower-range-scroll">
-                            <div class="price-wrapper">
-                                <p>min price</p>
-                                <label><span>RM</span><input min="100" max="1000" type="text" id="lower-range-input" class="price"></label>
-                            </div>
+                          <input type="range" min={{set.minmin}} max={{set.maxmax}} class="slider" id="lower-range-scroll">
+                        <div class="price-wrapper">
+                            <p>min price</p>
+                            <label><span>RM</span><input  min={{set.minmin}} max={{set.maxmax}} type="text" id="lower-range-input" class="price"></label>
                         </div>
-                        <div class="range">
-                            <input type="range" min="100" max="1000" value="1000" class="slider" id="upper-range-scroll">
-                            <div class="price-wrapper">
-                                <p>max price</p>
-                                <label><span>RM</span><input min="100" max="1000" type="text" id="upper-range-input" class="price"></label>
+                    </div>
+                    <div class="range">
+                        <input type="range"  min={{set.minmin}} max={{set.maxmax}} class="slider" id="upper-range-scroll">
+                        <div class="price-wrapper">
+                            <p>max price</p>
+                            <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} type="text" id="upper-range-input" class="price"></label>
                             </div>
                         </div>
                     </div>
@@ -57,9 +57,13 @@
                 <button id="room-capacity-button" class="button">Room Capacity</button>
                 <div class="dropdown-content" id="room-capacity-dropdown-content">
                     <div id="room-capacity-list">
-                        <label><input type="checkbox" id="capacity-1"><span class="room-capacity">1 Tenant</span></label>
-                        <label><input type="checkbox" id="capacity-2"><span class="room-capacity">2 Tenant</span></label>
-                        <label><input type="checkbox" id="capacity-3"><span class="room-capacity">3 Tenant</span></label>
+                        {{#each set.cap}}
+                          {{#if (lookup ../set.checkedCap @index)}}
+                            <label><input type="checkbox" id="capacity-{{.}}" checked><span class="room-capacity">{{.}} Tenant</span></label>
+                          {{else}}
+                            <label><input type="checkbox" id="capacity-{{.}}"><span class="room-capacity">{{.}} Tenant</span></label>
+                          {{/if}}
+                        {{/each}}
                     </div>
                     <div class="option">
                         <button id="rc-clear-button" class="clear-button">Clear</button>
