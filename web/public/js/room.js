@@ -205,7 +205,6 @@ function clearPriceRange() {
 }
 
 function setPriceRangeHTML() {
-  console.log(getUrlParameter('cap'))
   const min = getUrlParameter('min')
   const max = getUrlParameter('max')
   if (min) {
@@ -290,20 +289,22 @@ function updatePriceRange() {
 }
 
 function addUpdateUpperRangeListener(elementToAddListener) {
-    elementToAddListener.addEventListener('change', () => {
+    elementToAddListener.addEventListener('input', () => {
         const min = parseInt(elementToAddListener.value)
-        if (min === upperRangeScroll.min) {return}
-        upperRangeScroll.min = min
-        upperRangeInput.min = min
+        if (min >= upperRangeScroll.value) {
+          upperRangeScroll.value = min
+          upperRangeInput.value = min
+        }
     })
 }
 
 function addUpdateLowerRangeListener(elementToAddListener) {
-    elementToAddListener.addEventListener('change', () => {
+    elementToAddListener.addEventListener('input', () => {
         const max = parseInt(elementToAddListener.value)
-        if (max === lowerRangeScroll.max) {return}
-        lowerRangeScroll.max = max
-        lowerRangeInput.max = max
+        if (max <= lowerRangeScroll.value) {
+          lowerRangeScroll.value = max
+          lowerRangeInput.value = max
+        }
     })
 }
 
