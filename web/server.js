@@ -31,14 +31,13 @@ app.get('/', (req, res, next) => {
   res.status(200).render('page/index', {socialLinks})
 })
 
-let set = {}
-
-app.get('/room', (req, res, next) => {
+app.get('/room', async (req, res, next) => {
   const toNumbers = arr => arr.map(Number)
   const campus = req.query.campus
   const minPrice = req.query.min
   const maxPrice = req.query.max
   let capacity = []
+  let set = {}
   if (req.query.cap) {
     if (typeof(req.query.cap) === 'string') {
       capacity = [parseInt(req.query.cap)]
@@ -64,6 +63,12 @@ app.get('/room', (req, res, next) => {
     query['rooms.capacity'].$in = capacity
   }
   const collection = db.collection(config.collection)
+  set.slRoomCount = await collection.countDocuments({
+    campus: 'SL'
+  })
+  set.kpRoomCount = await collection.countDocuments({
+    campus: 'KP'
+  })
   collection.aggregate([
     {
       $match: {'campus': campus}
@@ -110,9 +115,18 @@ app.get('/room', (req, res, next) => {
   })
 })
 
-app.get('/saved', (req, res, next) => {
+app.get('/saved', async (req, res, next) => {
+  let set = {}
+  const collection = db.collection(config.collection)
+  set.slRoomCount = await collection.countDocuments({
+    campus: 'SL'
+  })
+  set.kpRoomCount = await collection.countDocuments({
+    campus: 'KP'
+  })
   res.status(200).render('page/saved', {socialLinks, set})
 })
+
 
 MongoClient.connect(config.url, {useNewUrlParser: true, useUnifiedTopology: true},  (err, client) => {
   if(err) {
@@ -123,5 +137,4 @@ MongoClient.connect(config.url, {useNewUrlParser: true, useUnifiedTopology: true
   app.listen(port, () => {
     console.log('===Server listening on port ', port)
   })
-  const collection = db.collection(config.collection)
 })

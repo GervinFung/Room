@@ -114,6 +114,7 @@ def main():
         results = soup.find(id='Room')
         table = results.find('table')
         rows = table.find_all(onmouseover=True)
+        ID = 1
         for row in rows:
             columns = row.find_all('td')
             accom_dict = {'campus': fcode}
@@ -129,7 +130,9 @@ def main():
                     insert_remark(accom_dict, column)
                 i += 1
             if accom_dict:
+                accom_dict['ID'] = fcode + str(ID)
                 rooms.append(accom_dict)
+                ID += 1
 
         print('number of rooms: ' + str(len(rooms)))
         page.close()

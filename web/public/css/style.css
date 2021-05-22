@@ -36,4 +36,5 @@ body {background-color: var(--secondary-color)}
     padding: 6px 16px 6px 16px;
     border-radius: 25px;
     color: var(--primary-color);
+    background-color: var(--secondary-color);
 }

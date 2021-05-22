@@ -1,27 +1,32 @@
 const infoContent = findByID('infos-content')
 
-function insertNewInfo(info) {
+function insertNewInfo(info, infoContent) {
   const infoHTML = Handlebars.templates.room(info)
   infoContent.insertAdjacentHTML('beforeend', infoHTML)
 }
 
-function parseInfoElem(infoElem) {
+function parseInfoElem(infoElem, idElem) {
   let info = {}
+
+  info.ID = idElem.querySelector('p').textContent.trim()
+
   const infoAddressElem = infoElem.querySelector('.address-info p')
   info.address = infoAddressElem.textContent.trim()
 
   const infoRemarksInfoElem = infoElem.querySelector('.remarks-info')
-  const remarksDivs = infoRemarksInfoElem.getElementsByTagName('div')
+  const remarksDivs = infoRemarksInfoElem.getElementsByTagName('p')
 
-  const infoAvailableFromElem = remarksDivs[0].firstElementChild
+  const infoAvailableFromElem = remarksDivs[0]
   let available_from = {}
   const date = infoAvailableFromElem.textContent.trim().split(' ')
   available_from.month = date[2]
   available_from.year = parseInt(date[3])
   info.available_from = available_from
 
-  const infoRemarksElem = remarksDivs[1].firstElementChild
+  const infoRemarksElem = remarksDivs[1]
   info.remarks = infoRemarksElem.textContent.trim()
+
+  info.facilities = infoElem.querySelector('.facilities-info p').textContent.trim()
 
   const infoContactElem = infoElem.querySelector('.contact-info')
   const contactDivs = infoContactElem.getElementsByTagName('p')
@@ -41,7 +46,7 @@ function parseInfoElem(infoElem) {
     rooms.push(room)
   }
   info.rooms = rooms
-  return info
+  return Object.freeze(info)
 }
 
 function roomsMatchQuery(rooms, query) {
@@ -70,7 +75,6 @@ function doSearchUpdate() {
     max_price: upperRangeScroll.value,
     capacity: getSelectedCapacity()
   }
-  console.log(query)
   const infoContainer = document.querySelector('.content')
   if (infoContainer) {
     while (infoContainer.lastChild) {
@@ -81,15 +85,22 @@ function doSearchUpdate() {
   allInfos.forEach((info) => {
     if (infoMatchesQuery(info, query)) {
       // console.log("inserting")
-      insertNewInfo(info)
+      insertNewInfo(info, infoContent)
     }
   })
   console.log(infoContent.innerHTML)
 }
 
-let allInfos = []
-
 const infosElemsCollection = document.getElementsByClassName('infos')
-for (let i = 0; i < infosElemsCollection.length; i++) {
-  allInfos.push(parseInfoElem(infosElemsCollection[i]))
+const idElemsCollection = document.getElementsByClassName('id')
+
+function getAllInfo() {
+  let info = []
+  for (let i = 0; i < infosElemsCollection.length; i++) {
+    info.push(parseInfoElem(infosElemsCollection[i], idElemsCollection[i]))
+  }
+  return Object.freeze(info)
 }
+
+const allInfos = getAllInfo()
+const allInfosLength = allInfos.length

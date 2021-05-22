@@ -18,10 +18,10 @@
         </div>
         <div class="filter-wrapper">
             <div class="button-wrapper">
-                 <a href="room?campus=KP" class="button" id="kampar">Kampar</a>
+                 <a href="room?campus=KP" class="button" id="kampar">Kampar({{set.kpRoomCount}})</a>
             </div>
             <div class="button-wrapper">
-                <a href="room?campus=SL" class="button" id="sg-long">Sg Long</a>
+                <a href="room?campus=SL" class="button" id="sg-long">Sg Long({{set.slRoomCount}})</a>
             </div>
         </div>
         <div class="filter-wrapper" id="non-campus-filter">
@@ -34,16 +34,16 @@
                     <div id="price-range-list">
                         <div class="range">
                           <input type="range" min={{set.minmin}} max={{set.maxmax}} class="slider" id="lower-range-scroll">
-                        <div class="price-wrapper">
-                            <p>min price</p>
-                            <label><span>RM</span><input  min={{set.minmin}} max={{set.maxmax}} type="text" id="lower-range-input" class="price"></label>
+                            <div class="price-wrapper">
+                                <p>min price</p>
+                                <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} value={{set.minmin}} type="text" id="lower-range-input" class="price"></label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="range">
-                        <input type="range"  min={{set.minmin}} max={{set.maxmax}} class="slider" id="upper-range-scroll">
-                        <div class="price-wrapper">
-                            <p>max price</p>
-                            <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} type="text" id="upper-range-input" class="price"></label>
+                        <div class="range">
+                            <input type="range"  min={{set.minmin}} max={{set.maxmax}} class="slider" id="upper-range-scroll">
+                            <div class="price-wrapper">
+                                <p>max price</p>
+                                <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} value={{set.maxmax}} type="text" id="upper-range-input" class="price"></label>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,8 @@
             <div class="loader"></div>
         </div>
     </div>
-    <div id="saved-dialog"></div>
 </div>
-<script src="../js/room.js"></script>
-<script src="../js/saveRoom.js"></script>
+<script src="/js/room.js" charset="utf-8" defer></script>
+<script src="/js/roomTemplate.js" charset="utf-8" defer></script>
+<script src="/js/filter.js" charset="utf-8" defer></script>
+<script src="/js/roomOnly.js" charset="utf-8" defer></script>
