@@ -9,7 +9,7 @@ const dropDownRC = findByID('room-capacity-dropdown')
 const rcOptions = getAllRoomCapacityOption()
 const clearRCBtn = findByID('rc-clear-button')
 
-const advancedSearch = findByID('advanced-search')
+const advancedSearch = document.getElementsByClassName('advanced-search')
 const saveBtnList = document.getElementsByClassName('save-room-btn')
 
 const dropDownPriceButton = findByID('price-range-button')
@@ -114,12 +114,14 @@ function getAllRoomCapacityOption() {
 
 
 function startSearch() {
-    advancedSearch.addEventListener('keyup', event => {
-        if (event.key === 'Enter') {
-            displayLoading()
-            console.log('Enter pressed')
-        }
-    })
+    for(let i = 0; i < advancedSearch.length; i++) {
+        advancedSearch[i].addEventListener('keyup', event => {
+            if (event.key === 'Enter') {
+                displayLoading()
+                console.log('Enter pressed')
+            }
+        })
+    }
 }
 
 function redirectFilter() {

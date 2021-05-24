@@ -10,9 +10,22 @@
         </div>
         <div class="filter-wrapper">
             <div class="filter-input">
-                <i class="fa fa-search"></i>
-                <label>
-                    <input type="text" name="advanced-search" id="advanced-search" placeholder="Type here to search" autofocus>
+                <span><i class="fa fa-search"></i></span>
+                <label class="specific-search-bar search-bar">
+                    <div><b>Address</b></div>
+                    <input type="text" class="advanced-search" name="advanced-search" id="address-search" placeholder="Address">
+                </label>
+                <label class="specific-search-bar search-bar">
+                    <div><b>Remarks</b></div>
+                    <input type="text" class="advanced-search" name="advanced-search" id="remarks-search" placeholder="Remarks">
+                </label>
+                <label class="specific-search-bar search-bar">
+                    <div><b>Facilities</b></div>
+                    <input type="text" class="advanced-search" name="advanced-search" id="facilities-search" placeholder="Facilities">
+                </label>
+                <label class="search-bar" id="general-search-bar">
+                    <div><b>Search</b></div>
+                    <input type="text" class="advanced-search" name="advanced-search" id="facilities-search" placeholder="Search" autofocus>
                 </label>
             </div>
         </div>
@@ -25,9 +38,7 @@
             </div>
         </div>
         <div class="filter-wrapper" id="non-campus-filter">
-            <div id="saved">
-                <a href="saved" class="button" id="saved-button">Saved</a>
-            </div>
+            <div id="saved"><a href="saved" class="button" id="saved-button">Saved</a></div>
             <div class="dropdown" id="price-range-dropdown">
                 <button id="price-range-button" class="button">Price</button>
                 <div class="dropdown-content" id="price-range-dropdown-content">
@@ -35,15 +46,21 @@
                         <div class="range">
                           <input type="range" min={{set.minmin}} max={{set.maxmax}} class="slider" id="lower-range-scroll">
                             <div class="price-wrapper">
-                                <p>min price</p>
-                                <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} value={{set.minmin}} type="text" id="lower-range-input" class="price"></label>
+                                <div>min price</div>
+                                <div class="input-price">
+                                    <span>RM</span>
+                                    <label><input min={{set.minmin}} max={{set.maxmax}} value={{set.minmin}} type="text" id="lower-range-input" class="price"></label>
+                                </div>
                             </div>
                         </div>
                         <div class="range">
                             <input type="range"  min={{set.minmin}} max={{set.maxmax}} class="slider" id="upper-range-scroll">
                             <div class="price-wrapper">
-                                <p>max price</p>
-                                <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} value={{set.maxmax}} type="text" id="upper-range-input" class="price"></label>
+                                <div>max price</div>
+                                <div class="input-price">
+                                    <span>RM</span>
+                                    <label><input min={{set.minmin}} max={{set.maxmax}} value={{set.maxmax}} type="text" id="upper-range-input" class="price"></label>
+                                </div>
                             </div>
                         </div>
                     </div>

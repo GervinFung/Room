@@ -14,11 +14,12 @@ const plusSignRegex = /\+/g
 const regUrl = '[\\?&]'
 const exUrl = '=([^&#]*)'
 
-
 highlightActiveCampus()
 displaySavedLoading()
+displayCampusLoading()
 
 function findByID(ID) {return document.getElementById(ID)}
+function findByClassName(className) {return document.getElementsByClassName(className)}
 
 function getUrlParameter(name) {
     name = name.replace(firstEscapeChar, secondEscapeChar).replace(firstEscapeCharReplace, secondEscapeCharReplace)
@@ -45,6 +46,15 @@ function displayLoading() {
 
 function displaySavedLoading() {
     saveLinkBtn.addEventListener('click', () => {
+        displayLoading()
+    })
+}
+
+function displayCampusLoading() {
+    KAMPAR.addEventListener('click', () => {
+        displayLoading()
+    })
+    SGLONG.addEventListener('click', () => {
         displayLoading()
     })
 }
