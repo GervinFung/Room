@@ -38,7 +38,6 @@ function createFileToDownload(fileExtension, text) {
 
 
 function display() {
-    displayLoading(150)
     if (roomListSize === 0) {
         return
     }

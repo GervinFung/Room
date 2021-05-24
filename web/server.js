@@ -110,6 +110,11 @@ app.get('/room', async (req, res, next) => {
         error: 'Error fetching campus from database'
       })
     } else {
+      if (req.query.campus === 'KP') {
+        set.kpRoomCount = places.length
+      } else if (req.query.campus === 'SL') {
+        set.slRoomCount = places.length
+      }
       res.status(200).render('page/roomPage', {places, socialLinks, set})
     }
   })

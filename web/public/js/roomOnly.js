@@ -20,7 +20,7 @@ const lowerRangeScroll = findByID('lower-range-scroll')
 const upperRangeScroll = findByID('upper-range-scroll')
 const lowerRangeInput = findByID('lower-range-input')
 const upperRangeInput = findByID('upper-range-input')
-const minPrice = lowerRangeInput.min, maxPrice = upperRangeInput.max
+const minPrice = parseInt(lowerRangeInput.min), maxPrice = parseInt(upperRangeInput.max)
 const numberRegex = /^\d+$/, nonNumberRegex = /[^\d]/g
 
 let savedRoomList = []
@@ -40,6 +40,7 @@ setPriceRangeHTML()
 clearPriceRange()
 updatePriceValue()
 changeSaveBtnInnerHTML()
+activateClearPriceButton()
 
 
 function consistOf(savedRoomStorage, ID) {
@@ -115,7 +116,7 @@ function getAllRoomCapacityOption() {
 function startSearch() {
     advancedSearch.addEventListener('keyup', event => {
         if (event.key === 'Enter') {
-            displayLoading(500)
+            displayLoading()
             console.log('Enter pressed')
         }
     })
@@ -166,7 +167,7 @@ function getSelectedCapacity() {
 }
 
 function filterRoomCapacityListener() {
-    displayLoading(150)
+    displayLoading()
     selectedCapacity = getSelectedCapacity()
     setRoomCapacityHTML(selectedCapacity)
     dropDownRCContent.style.display = 'none'
@@ -176,6 +177,11 @@ function filterRoomCapacityListener() {
 function activateClearRoomCapacityButton() {
     for (let i = 0; i < roomCapacityListSize; i++) {
         const element = rcOptions[i]
+        if (element.checked) {
+            if (!clearRCBtn.className.includes(AVAILABLE)) {
+                clearRCBtn.className += AVAILABLE
+            }
+        }
         element.addEventListener('click', () => {
             if (element.checked) {
                 if (!clearRCBtn.className.includes(AVAILABLE)) {
@@ -219,10 +225,12 @@ function updatePriceValue() {
     addScrollPriceListener()
     upperRangeInputListener()
     lowerRangeInputListener()
+    lowerRangeInput.value = lowerRangeScroll.value
+    upperRangeInput.value = upperRangeScroll.value
 }
 
 function filterPriceRangeListener() {
-    displayLoading(150)
+    displayLoading()
     const lowerRange = lowerRangeScroll.value
     const upperRange = upperRangeScroll.value
     console.log('proceed with query..' + lowerRange + ' ' + upperRange)
@@ -256,9 +264,11 @@ function setPriceRangeHTML() {
   } else {
     upperRangeScroll.value = maxPrice
   }
+  lowerRangeInput.value = lowerRangeScroll.value
+  upperRangeInput.value = upperRangeScroll.value
   const lowerRange = lowerRangeScroll.value
   const upperRange = upperRangeScroll.value
-  dropDownPriceButton.innerHTML = parseInt(lowerRange) == minPrice && parseInt(upperRange) == maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
+  dropDownPriceButton.innerHTML = parseInt(lowerRange) === minPrice && parseInt(upperRange) === maxPrice ? 'Price' : 'RM ' + lowerRange + ' - RM '  + upperRange
 }
 
 function upperRangeInputListener() {
@@ -266,7 +276,7 @@ function upperRangeInputListener() {
         if (!numberRegex.test(upperRangeInput.value)) {
             upperRangeInput.value = upperRangeInput.value.replace(nonNumberRegex, '')
         }
-        updateClearPriceRangeClassName()
+        activateClearPriceButton()
         upperRangeScroll.value = upperRangeInput.value
         addUpdateLowerRangeListener(upperRangeInput)
     })
@@ -292,7 +302,7 @@ function lowerRangeInputListener() {
         if (!numberRegex.test(lowerRangeInput.value)) {
             lowerRangeInput.value = lowerRangeInput.value.replace(nonNumberRegex, '')
         }
-        updateClearPriceRangeClassName()
+        activateClearPriceButton()
         lowerRangeScroll.value = lowerRangeInput.value
         addUpdateUpperRangeListener(lowerRangeInput)
     })
@@ -317,12 +327,12 @@ function addScrollPriceListener() {
     upperRangeScroll.addEventListener('input', () => {
         upperRangeInput.value = upperRangeScroll.value
         addUpdateLowerRangeListener(upperRangeScroll)
-        updateClearPriceRangeClassName()
+        activateClearPriceButton()
     })
     lowerRangeScroll.addEventListener('input', () => {
         lowerRangeInput.value = lowerRangeScroll.value
         addUpdateUpperRangeListener(lowerRangeScroll)
-        updateClearPriceRangeClassName()
+        activateClearPriceButton()
     })
 }
 
@@ -342,8 +352,8 @@ function addUpdateLowerRangeListener(upperRange) {
     }
 }
 
-function updateClearPriceRangeClassName() {
-    if (parseInt(upperRangeScroll.value) == maxPrice && parseInt(lowerRangeScroll.value) == minPrice) {
+function activateClearPriceButton() {
+    if (parseInt(upperRangeScroll.value) === maxPrice && parseInt(lowerRangeScroll.value) === minPrice) {
         clearPriceBtn.className = 'clear-button'
         dropDownPriceButton.innerHTML = 'Price'
     }

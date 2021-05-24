@@ -16,7 +16,7 @@ const exUrl = '=([^&#]*)'
 
 
 highlightActiveCampus()
-
+displaySavedLoading()
 
 function findByID(ID) {return document.getElementById(ID)}
 
@@ -39,8 +39,12 @@ function changeClassName(activeCampus, inactiveCampus) {
     inactiveCampus.className.replace(ACTIVE, '')
 }
 
-
-function displayLoading(time) {
+function displayLoading() {
     waiting.style.display = 'flex'
-    setTimeout(() => {waiting.style.display = 'none'}, time)
+}
+
+function displaySavedLoading() {
+    saveLinkBtn.addEventListener('click', () => {
+        displayLoading()
+    })
 }
