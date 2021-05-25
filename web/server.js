@@ -31,7 +31,7 @@ app.get('/', (req, res, next) => {
   res.status(200).render('page/index', {socialLinks})
 })
 
-app.get('/room', async (req, res, next) => {
+app.get('/room', (req, res, next) => {
   const toNumbers = arr => arr.map(Number)
   const campus = req.query.campus
   const minPrice = req.query.min
@@ -49,87 +49,100 @@ app.get('/room', async (req, res, next) => {
   if (campus) {
     query['campus'] = campus
   }
+  if (minPrice || maxPrice || capacity.length != 0) {
+    query['rooms'] = { $elemMatch: {} }
+  }
   if (minPrice || maxPrice) {
-    query['rooms.price'] = {}
+    query['rooms'].$elemMatch.price = {}
     if (minPrice) {
-      query['rooms.price'].$gte = parseInt(minPrice)
+      query['rooms'].$elemMatch.price.$gte = parseInt(minPrice)
     }
     if (maxPrice) {
-      query['rooms.price'].$lte = parseInt(maxPrice)
+      query['rooms'].$elemMatch.price.$lte = parseInt(maxPrice)
     }
   }
   if (capacity.length != 0) {
-    query['rooms.capacity'] = {}
-    query['rooms.capacity'].$in = capacity
+    query['rooms'].$elemMatch.capacity = {}
+    query['rooms'].$elemMatch.capacity.$in = capacity
   }
   const collection = db.collection(config.collection)
-  set.slRoomCount = await collection.countDocuments({
-    campus: 'SL'
-  })
-  set.kpRoomCount = await collection.countDocuments({
-    campus: 'KP'
-  })
-  collection.aggregate([
-    {
-      $match: {'campus': campus}
-    },
-    {
-      $group:
-      {
-        '_id': null,
-        'minPrice': {'$min': {'$min': '$rooms.price'} },
-        'maxPrice': {'$max': {'$max' : '$rooms.price'} }
-      }
-    }
-  ]).toArray((err, minmax) => {
-    if (err) {
-      res.status(500).send({
-        error: 'Error fetching campus from database'
-      })
-    } else {
-      set.minmin = minmax[0].minPrice
-      set.maxmax = minmax[0].maxPrice
-    }
-  })
-  let cap = collection.distinct('rooms.capacity', {campus: campus})
-  cap.then((result) => {
-    let checked = []
-    for (let i = 0; i < result.length; i++) {
-      if (capacity.includes(result[i])) {
-        checked.push(1)
-      } else {
-        checked.push(0)
-      }
-    }
-    set.cap = result
-    set.checkedCap = checked
-  })
   collection.find(query).toArray((err, places) => {
     if (err) {
       res.status(500).send({
-        error: 'Error fetching campus from database'
+        error: 'Error querying from database'
       })
     } else {
-      if (req.query.campus === 'KP') {
-        set.kpRoomCount = places.length
-      } else if (req.query.campus === 'SL') {
-        set.slRoomCount = places.length
-      }
-      res.status(200).render('page/roomPage', {places, socialLinks, set})
+      collection.aggregate([
+        {
+          $match: {'campus': campus}
+        },
+        {
+          $group:
+          {
+            '_id': null,
+            'minPrice': {'$min': {'$min': '$rooms.price'} },
+            'maxPrice': {'$max': {'$max' : '$rooms.price'} }
+          }
+        }
+      ]).toArray((err, minmax) => {
+        if (err) {
+          res.status(500).send({
+            error: 'Error fetching campus from database'
+          })
+        } else {
+          set.minmin = minmax[0].minPrice
+          set.maxmax = minmax[0].maxPrice
+          collection.distinct('rooms.capacity', {campus: campus}, (err, cap) => {
+            if (err) {
+              res.status(500).send({
+                error: 'Error getting room capacity from database'
+              })
+            } else {
+              let checked = []
+              for (let i = 0; i < cap.length; i++) {
+                if (capacity.includes(cap[i])) {
+                  checked.push(1)
+                } else {
+                  checked.push(0)
+                }
+              }
+              set.cap = cap
+              set.checkedCap = checked
+              let otherCampus
+              if (campus === 'SL') {
+                otherCampus = 'KP'
+              } else if (campus === 'KP') {
+                otherCampus = 'SL'
+              }
+              collection.countDocuments({campus: otherCampus}, (err, count) => {
+                if (campus === 'SL') {
+                  set.slRoomCount = places.length
+                  set.kpRoomCount = count
+                } else if (campus === 'KP') {
+                  set.slRoomCount = count
+                  set.kpRoomCount = places.length
+                }
+                res.status(200).render('page/roomPage', {places, socialLinks, set})
+              })
+            }
+          })
+        }
+      })
     }
   })
 })
 
-app.get('/saved', async (req, res, next) => {
+app.get('/saved', (req, res, next) => {
   let set = {}
   const collection = db.collection(config.collection)
-  set.slRoomCount = await collection.countDocuments({
-    campus: 'SL'
+  collection.countDocuments({campus: 'KP'}, (err, result) => {
+    collection.countDocuments({campus: 'SL'}, (err, result2) => {
+      set.kpRoomCount = result
+      set.slRoomCount = result2
+      console.log(set)
+      res.status(200).render('page/saved', {socialLinks, set})
+    })
   })
-  set.kpRoomCount = await collection.countDocuments({
-    campus: 'KP'
-  })
-  res.status(200).render('page/saved', {socialLinks, set})
 })
 
 
@@ -143,3 +156,7 @@ MongoClient.connect(config.url, {useNewUrlParser: true, useUnifiedTopology: true
     console.log('===Server listening on port ', port)
   })
 })
+
+function queryPlaces(query) {
+
+}
