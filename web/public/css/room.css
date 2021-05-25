@@ -5,7 +5,7 @@
     color: var(--primary-color);
 }
 
-.filter-wrapper {
+.filter-wrapper, .download-wrapper {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -22,14 +22,15 @@
     padding: 4px 10px 4px 10px;
     box-shadow: 0 3px 10px 0 rgba(0,0,0,0.5);
     border: 3px solid var(--primary-color) !important;
+    background-color: var(--secondary-color);
 }
 
-.filter-input > label > input {
+#advanced-search {
     border: none;
     font-size: 1.5em;
 }
 
-.filter-input:focus, .filter-input > label > input {outline: none}
+.filter-input:focus, #advanced-search {outline: none}
 
 .fa-search:focus {outline: none}
 
@@ -46,8 +47,9 @@
 }
 
 .button-wrapper {margin: 20px}
+#saved {margin: 20px 0 20px 0}
 
-.button-wrapper:hover, .dropdown > button:hover {
+.button-wrapper:hover, .dropdown > button:hover, #download-txt-button:hover, #saved:hover {
     transform: scale(1.1);
     transition: ease-in-out 0.2s;
 }
@@ -72,7 +74,7 @@
     border: 3px solid var(--primary-color);
 }
 
-.save-button {
+.search-button {
     color: var(--secondary-color);
     background-color:var(--primary-color);
 }
@@ -265,36 +267,114 @@ input[type="text"] {width: auto}
 
 
 
-
-
-
-
-
 /* content */
-.price-label, .available, .tenants, .address {
+.price-label, .available, .tenants, .address, .facilities, .contact {
     font-weight: 900;
     font-size: 1.15em;
 }
 
 .infos {
-    border-top: 3px solid var(--primary-color);
-    align-items: center;
     justify-content: space-evenly;
     display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary-color)
 }
 
-.infos:hover {background-color: azure}
+.room-wrapper {
+    border-top: 3px solid var(--primary-color);
+    padding: 10px 0 10px 0;
+}
 
-.vital-info {width: 75%}
-.less-vital-info {width: 20%}
+.top-div {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
 
+.save-room-btn {
+    margin: 7px;
+    padding: 6px 16px 6px 16px;
+    border-radius: 25px;
+    color: var(--secondary-color);
+    border: 2px solid var(--red-color);
+    font-size: 1.5em;
+    background: linear-gradient(to right, var(--red-color) 50%, white 50%) left;
+    background-size: 231%;
+    transition: all 0.25s ease;
+}
+
+.save-room-btn:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    background-position: right;
+    color: var(--red-color);
+}
+
+/* .infos:nth-child(4n + 1) {background-color: #e74c3c}
+.infos:nth-child(4n + 2) {background-color: #e67e22}
+.infos:nth-child(4n + 3) {background-color: #1abc9c}
+.infos:nth-child(4n + 4) {background-color: #2ecc71}
+.infos:nth-child(4n + 5) {background-color: #9b59b6} */
+
+.info:hover, .id > p:hover {
+    cursor: pointer;
+}
+
+.id > p {
+    font-style: italic;
+    font-size: 1.35em;
+}
+.id {margin: 0 0 -10px 16px}
+.vital-info {width: 70%}
+.less-vital-info {width: 30%}
 .info {margin: 16px}
-.address-info {margin-bottom: 25px}
-.accomodation-infos {border-top: 2px solid gray}
+.address-info, .remarks-info {margin-bottom: 25px}
+.accomodation-infos {
+    border-top: 2px solid gray;
+    width: 90%;
+    flex-wrap: wrap;
+    display: inline-flex
+}
 .option {border-top: 1px solid lightslategray}
 
-@media (max-width: 771px) and (min-width: 370px) {
-    .vital-info {width: 75%}
+#saved-dialog {
+    position: absolute;
+    display: none;
+    border: 1px solid black;
+    padding: 6px 16px 6px 16px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    animation: fade 0.25s linear;
+    -webkit-animation: fade 0.25s linear;
+    -o-animation: fade 0.25s linear;
+    -moz-animation: fade 0.25s linear;
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-webkit-keyframes  fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-o-keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-ms-keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+@-moz-keyframes fade {
+    0%, 100% { opacity: 0 }
+    50% { opacity: 0.9 }
+}
+
+
+@media (max-width: 787px) {
+    .vital-info {width: 60%}
     .less-vital-info {width: 40%}
 }
 
@@ -309,21 +389,19 @@ input[type="text"] {width: auto}
     .filter-input > label > input {margin: 5px 10px 5px 10px}
 }
 
-@media (max-width: 396px) {
-    .fa-search {margin: 0}
-}
+@media (max-width: 396px) {.fa-search {margin: 0}}
 
-@media (max-width: 386px) {
+@media (max-width: 594px) {
+    .infos {display: block}
     #non-campus-filter {
         text-align: center;
         display: block;
     }
-    #price-range-dropdown-content {margin-left: -50px !important}
-    .infos {display: block}
-    .option > button, .price-wrapper > p {font-size: 0.8em}
-    .contact-info, .accomodation-infos {margin-top: 25px}
     .vital-info, .less-vital-info {width: 100%}
-    .info {text-align: center}
+    .info {
+        text-align: center;
+        margin: 0
+    }
     .accomodation-infos {
         border-top: none;
         width: 100%;
@@ -339,17 +417,30 @@ input[type="text"] {width: auto}
         padding-left: 0;
     }
     .accomodation-info {width: 50%}
-    .title, .filter-input > label > input, .button {font-size: 0.9em}
-    .tenants, .price-label {font-size: 0.9em}
+    .room-type {font-size: 1.2em}
+}
+
+@media (max-width: 386px) {
+    #price-range-dropdown-content {margin-left: -50px !important}
+    .option > button, .price-wrapper > p {font-size: 0.85em}
+    .contact-info, .accomodation-infos {margin-top: 25px}
+    .title, .filter-input > label > input, .button, .save-room-btn {font-size: 0.9em}
+    .save-room-btn {background-size: 400%}
+    .tenants, .price-label, #advanced-search {font-size: 0.9em}
 }
 
 @media (max-width: 371px) {
     input[type="text"] {width: 80% !important}
     #price-range-dropdown-content {margin-left: 30px !important}
+    #advanced-search {margin: 0}
 }
+
+@media (max-width: 355px) {p {font-size: 0.85em}}
 
 @media (max-width: 311px) {
     .tenants, .price-label, .filter-input > label > input, .button {font-size: 0.8em}
     .button-wrapper {margin: 10px 0 10px 0}
     .price-wrapper {padding: 5px}
 }
+
+@media (max-width: 298px) {p {font-size: 0.75em}}

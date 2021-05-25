@@ -1,37 +1,41 @@
-<div class="infos">
-    <div class="vital-info">
-        <address class="address-info info">
-            <h1 class="address">Address</h1>
-            <p>{{address}}</p>
-        </address>
-        <div class="remarks-info info">
-            <div>
-                <p class="available">Available From: {{available_from.month}} {{available_from.year}}</p>
-            </div>
-            <div>
-                <p>{{remarks}}</p>
-            </div>
+<div class="room-wrapper">
+    <div class="top-div">
+        <div class="id"><p>{{ID}}</p></div>
+        <div class="save-room-btn-container">
+            <button class="save-room-btn">Save</button>
         </div>
     </div>
-    <div class="less-vital-info">
-        <div class="contact-info info">
-            <h2>Contact Details</h2>
-            <p>{{name}}</p>
-            <p>{{hp_no}}</p>
-            <p>{{email}}</p>
+    <div class="infos">
+        <div class="vital-info">
+            <address class="address-info info">
+                <h1 class="address">Address</h1>
+                <p>{{address}}</p>
+            </address>
+            <div class="remarks-info info">
+                <p class="available">Available From: {{available_from.month}} {{available_from.year}}</p>
+                <p>{{remarks}}</p>
+            </div>
+            <div class="facilities-info info">
+                <h1 class="facilities">Facilities</h1>
+                <p>{{facilities}}</p>
+            </div>
         </div>
-        <div class="accomodation-infos info">
-            {{#each rooms}}
-            <div class="accomodation-info">
-                <div>
-                    <p>{{type}}</p>
+        <div class="less-vital-info">
+            <div class="contact-info info">
+                <h1 class="contact">Contact Details</h1>
+                <p>{{name}}</p><p>{{hp_no}}</p><p>{{email}}</p>
+            </div>
+            <div class="accomodation-infos info">
+                {{#each rooms}}
+                <div class="accomodation-info">
+                    <p class="room-type">{{type}}</p>
                     <ul>
-                        <li class="tenants">{{capacity}} tenants</li>
-                        <li class="price-label">&#36;{{price}} / tenant</li>
+                        <li><p class="tenants">{{capacity}} tenants</p></li>
+                        <li><p class="price-label">&#36;{{price}} / tenant</p></li>
                     </ul>
                 </div>
+            {{/each}}
             </div>
-          {{/each}}
         </div>
     </div>
 </div>

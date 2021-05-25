@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="./css/room.css">
+<link rel="stylesheet" href="./css/waiting.css">
+<style>
+    #saved-button {
+        color: white;
+        background-color: black;
+    }
+    #no-rooms {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #no-rooms > p {font-size: 2em}
+</style>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="../img/index.jpg" alt="">
+        </div>
+        <div class="title">
+            <h2>Accomodation Listing</h2>
+        </div>
+        <div class="filter-wrapper">
+            <div class="button-wrapper">
+                 <a href="room?campus=KP" class="button" id="kampar">Kampar({{set.kpRoomCount}})</a>
+            </div>
+            <div class="button-wrapper">
+                <a href="room?campus=SL" class="button" id="sg-long">Sg Long({{set.slRoomCount}})</a>
+            </div>
+        </div>
+        <div class="filter-wrapper" id="non-campus-filter">
+            <div id="saved">
+                <a href="saved" class="button" id="saved-button">Saved</a>
+            </div>
+        </div>
+        <div class="download-wrapper">
+            <button class="button" id="download-txt-button">Download Saved Data</button>
+        </div>
+    </div>
+    <div class="content" id="infos-content">
+        <div id="no-rooms">
+            <p>--No Room Saved--</p>
+        </div>
+    </div>
+    <div id="waitingBackground">
+        <div class="waiting-content">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>
+<script src="/js/room.js" charset="utf-8" defer></script>
+<script src="/js/roomTemplate.js" charset="utf-8" defer></script>
+<script src="/js/filter.js" charset="utf-8" defer></script>
+<script src="/js/savedOnly.js" charset="utf-8" defer></script>
