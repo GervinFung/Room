@@ -9,8 +9,10 @@ const dropDownRC = findByID('room-capacity-dropdown')
 const rcOptions = getAllRoomCapacityOption()
 const clearRCBtn = findByID('rc-clear-button')
 
-const advancedSearch = document.getElementsByClassName('advanced-search')
-const saveBtnList = document.getElementsByClassName('save-room-btn')
+const advancedSearch = findByClassName('advanced-search')
+const saveBtnList = findByClassName('save-room-btn')
+const closePriceBtn = findByID('close-price')
+const closeRCBtn = findByID('close-room')
 
 const dropDownPriceButton = findByID('price-range-button')
 const dropDownPrice = findByID('price-range-dropdown')
@@ -161,8 +163,9 @@ function getMaxPrice() {
 function getSelectedCapacity() {
   let selectedCapacity = []
   for (let i = 0; i < roomCapacityListSize; i++) {
-      if (rcOptions[i].checked) {
-          selectedCapacity.push(i)
+      const option = rcOptions[i]
+      if (option.checked) {
+          selectedCapacity.push(parseInt(option.id.replace('capacity-', '')))
       }
   }
   return Object.freeze(selectedCapacity)
@@ -384,15 +387,18 @@ function filterPriceRange() {
 function closeDropdownContent() {
     window.addEventListener('click', event => {
         const target = event.target
-        priceShow = detectClickOutsideOfDropdown(target, dropDownPrice, dropDownPriceContent, searchPriceBtn, dropDownPriceButton, priceShow)
-        rcShow = detectClickOutsideOfDropdown(target, dropDownRC, dropDownRCContent, searchRCBtn, dropDownRCButton, rcShow)
+        priceShow = detectClickOutsideOfDropdown(target, dropDownPrice, dropDownPriceContent, searchPriceBtn, dropDownPriceButton, closePriceBtn, priceShow)
+        rcShow = detectClickOutsideOfDropdown(target, dropDownRC, dropDownRCContent, searchRCBtn, dropDownRCButton, closeRCBtn, rcShow)
     })
 }
 
-function detectClickOutsideOfDropdown(target, dropdown, dropdownContent, saveButton, dropDownButton, show) {
+function detectClickOutsideOfDropdown(target, dropdown, dropdownContent, saveButton, dropDownButton, closeBtn, show) {
     if (target === dropDownButton) {
         dropdownContent.style.display = show ? 'none' : 'block'
         return !show
+    } else if (target === closeBtn) {
+        dropdownContent.style.display = 'none'
+        return false
     } else {
         const isClickOutsideOrSaveBtn = (target !== dropdown && !dropdown.contains(target)) || target === saveButton
         dropdownContent.style.display = isClickOutsideOrSaveBtn ? 'none' : 'block'
