@@ -32,59 +32,26 @@ app.get('/', (req, res, next) => {
 })
 
 app.get('/room', (req, res, next) => {
-  const toNumbers = arr => arr.map(Number)
   const campus = req.query.campus
   const minPrice = req.query.min
   const maxPrice = req.query.max
-  let capacity = []
+  const capacity = getCapacityQ(req.query.cap)
+  let otherCampus = ''
+  if (campus === 'SL') {
+    otherCampus = 'KP'
+  } else if (campus === 'KP') {
+    otherCampus = 'SL'
+  }
   let set = {}
-  if (req.query.cap) {
-    if (typeof(req.query.cap) === 'string') {
-      capacity = [parseInt(req.query.cap)]
-    } else {
-      capacity = toNumbers(req.query.cap)
-    }
-  }
-  let query = {}
-  if (campus) {
-    query['campus'] = campus
-  }
-  if (minPrice || maxPrice || capacity.length != 0) {
-    query['rooms'] = { $elemMatch: {} }
-  }
-  if (minPrice || maxPrice) {
-    query['rooms'].$elemMatch.price = {}
-    if (minPrice) {
-      query['rooms'].$elemMatch.price.$gte = parseInt(minPrice)
-    }
-    if (maxPrice) {
-      query['rooms'].$elemMatch.price.$lte = parseInt(maxPrice)
-    }
-  }
-  if (capacity.length != 0) {
-    query['rooms'].$elemMatch.capacity = {}
-    query['rooms'].$elemMatch.capacity.$in = capacity
-  }
   const collection = db.collection(config.collection)
-  collection.find(query).toArray((err, places) => {
+  collection.find(generateQueryStatement(campus, minPrice, maxPrice, capacity))
+  .toArray((err, places) => {
     if (err) {
       res.status(500).send({
         error: 'Error querying from database'
       })
     } else {
-      collection.aggregate([
-        {
-          $match: {'campus': campus}
-        },
-        {
-          $group:
-          {
-            '_id': null,
-            'minPrice': {'$min': {'$min': '$rooms.price'} },
-            'maxPrice': {'$max': {'$max' : '$rooms.price'} }
-          }
-        }
-      ]).toArray((err, minmax) => {
+      collection.aggregate(minmaxPipeline(campus)).toArray((err, minmax) => {
         if (err) {
           res.status(500).send({
             error: 'Error fetching campus from database'
@@ -108,12 +75,6 @@ app.get('/room', (req, res, next) => {
               }
               set.cap = cap
               set.checkedCap = checked
-              let otherCampus
-              if (campus === 'SL') {
-                otherCampus = 'KP'
-              } else if (campus === 'KP') {
-                otherCampus = 'SL'
-              }
               collection.countDocuments({campus: otherCampus}, (err, count) => {
                 if (campus === 'SL') {
                   set.slRoomCount = places.length
@@ -157,6 +118,56 @@ MongoClient.connect(config.url, {useNewUrlParser: true, useUnifiedTopology: true
   })
 })
 
-function queryPlaces(query) {
+function getCapacityQ(cap) {
+  const toNumbers = arr => arr.map(Number)
+  let capacity = []
+  if (cap) {
+    if (typeof(cap) === 'string') {
+      capacity = [parseInt(cap)]
+    } else {
+      capacity = toNumbers(cap)
+    }
+  }
+  return capacity
+}
 
+function generateQueryStatement(campus, minPrice, maxPrice, capacity) {
+  let query = {}
+
+  if (campus) {
+    query['campus'] = campus
+  }
+  if (minPrice || maxPrice || capacity.length != 0) {
+    query['rooms'] = { $elemMatch: {} }
+  }
+  if (minPrice || maxPrice) {
+    query['rooms'].$elemMatch.price = {}
+    if (minPrice) {
+      query['rooms'].$elemMatch.price.$gte = parseInt(minPrice)
+    }
+    if (maxPrice) {
+      query['rooms'].$elemMatch.price.$lte = parseInt(maxPrice)
+    }
+  }
+  if (capacity.length != 0) {
+    query['rooms'].$elemMatch.capacity = {}
+    query['rooms'].$elemMatch.capacity.$in = capacity
+  }
+  return query
+}
+
+function minmaxPipeline(campus) {
+  const pipeline =
+  [{
+    $match: {'campus': campus}
+  },
+  {
+    $group:
+    {
+      '_id': null,
+      'minPrice': {'$min': {'$min': '$rooms.price'} },
+      'maxPrice': {'$max': {'$max' : '$rooms.price'} }
+    }
+  }]
+  return pipeline
 }
