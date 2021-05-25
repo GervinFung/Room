@@ -76,14 +76,20 @@ app.get('/room', (req, res, next) => {
               set.cap = cap
               set.checkedCap = checked
               collection.countDocuments({campus: otherCampus}, (err, count) => {
-                if (campus === 'SL') {
-                  set.slRoomCount = places.length
-                  set.kpRoomCount = count
-                } else if (campus === 'KP') {
-                  set.slRoomCount = count
-                  set.kpRoomCount = places.length
+                if (err) {
+                  res.status(500).send({
+                    error: 'Error counting room from database'
+                  })
+                } else {
+                  if (campus === 'SL') {
+                    set.slRoomCount = places.length
+                    set.kpRoomCount = count
+                  } else if (campus === 'KP') {
+                    set.slRoomCount = count
+                    set.kpRoomCount = places.length
+                  }
+                  res.status(200).render('page/roomPage', {places, socialLinks, set})
                 }
-                res.status(200).render('page/roomPage', {places, socialLinks, set})
               })
             }
           })
