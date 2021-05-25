@@ -33,14 +33,22 @@
                 <div class="dropdown-content" id="price-range-dropdown-content">
                     <div id="price-range-list">
                         <div class="range">
-                          <input type="range" min={{set.minmin}} max={{set.maxmax}} class="slider" id="lower-range-scroll">
+                            <div class="slider-wrapper">
+                              <span class="adjustment-sign minus-sign">&minus;</span>
+                              <input type="range" min={{set.minmin}} max={{set.maxmax}} step=10 class="slider" id="lower-range-scroll">
+                              <span class="adjustment-sign plus-sign">&plus;</span>
+                            </div>
                             <div class="price-wrapper">
                                 <p>min price</p>
                                 <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} value={{set.minmin}} type="text" id="lower-range-input" class="price"></label>
                             </div>
                         </div>
                         <div class="range">
-                            <input type="range"  min={{set.minmin}} max={{set.maxmax}} class="slider" id="upper-range-scroll">
+                            <div class="slider-wrapper">
+                              <span class="adjustment-sign minus-sign">&minus;</span>
+                              <input type="range"  min={{set.minmin}} max={{set.maxmax}} step=10 class="slider" id="upper-range-scroll">
+                              <span class="adjustment-sign plus-sign">&plus;</span>
+                            </div>
                             <div class="price-wrapper">
                                 <p>max price</p>
                                 <label><span>RM</span><input min={{set.minmin}} max={{set.maxmax}} value={{set.maxmax}} type="text" id="upper-range-input" class="price"></label>
