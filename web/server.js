@@ -154,8 +154,8 @@ function toRegex(arr) {
 }
 
 function getSearchQ(field) {
-  field = field.trim()
   if (field) {
+    field = field.trim()
     return toRegex(field.split(" "))
   } else {
     return undefined
