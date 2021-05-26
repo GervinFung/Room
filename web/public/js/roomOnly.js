@@ -22,6 +22,7 @@ const lowerRangeScroll = findByID('lower-range-scroll')
 const upperRangeScroll = findByID('upper-range-scroll')
 const lowerRangeInput = findByID('lower-range-input')
 const upperRangeInput = findByID('upper-range-input')
+const adjustmentSigns = document.getElementsByClassName('adjustment-sign')
 const minPrice = parseInt(lowerRangeInput.min), maxPrice = parseInt(upperRangeInput.max)
 const numberRegex = /^\d+$/, nonNumberRegex = /[^\d]/g
 
@@ -230,6 +231,7 @@ function updatePriceValue() {
     addScrollPriceListener()
     upperRangeInputListener()
     lowerRangeInputListener()
+    addAdjustSignListener()
     lowerRangeInput.value = lowerRangeScroll.value
     upperRangeInput.value = upperRangeScroll.value
 }
@@ -354,6 +356,40 @@ function addUpdateLowerRangeListener(upperRange) {
     if (max <= lowerRangeScroll.value) {
         lowerRangeScroll.value = max
         lowerRangeInput.value = max
+    }
+}
+
+var priceChangeInterval = null
+var priceChangeTimeout = null
+
+function changePriceValue(sign, scrollElem, numberElem) {
+    const oldValue = parseInt(scrollElem.value)
+    if (sign === "+") {
+      scrollElem.value = oldValue + parseInt(scrollElem.step)
+    } else {
+      scrollElem.value = oldValue - parseInt(scrollElem.step)
+    }
+    numberElem.value = scrollElem.value
+    scrollElem.dispatchEvent(new Event('input'))
+}
+
+function startChangingPrice(sign) {
+    const scrollElem = sign.parentElement.getElementsByTagName('input')[0]
+    const numberElem = sign.parentElement.nextElementSibling.getElementsByTagName('input')[0]
+    const signContent = sign.textContent
+    changePriceValue(signContent, scrollElem, numberElem)
+    priceChangeTimeout = setTimeout(() => {
+      priceChangeInterval = setInterval(() => {changePriceValue(signContent, scrollElem, numberElem)}, 10)
+    }, 500)
+}
+
+function addAdjustSignListener() {
+    for (const sign of adjustmentSigns) {
+      sign.addEventListener('mousedown', () =>{startChangingPrice(sign)})
+      sign.addEventListener('mouseup', () => {
+        clearInterval(priceChangeInterval)
+        clearTimeout(priceChangeTimeout)
+      })
     }
 }
 

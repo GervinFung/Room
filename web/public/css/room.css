@@ -167,6 +167,11 @@
 
 .range {margin: 20px}
 
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .slider {
     position: relative;
     -webkit-appearance: none;
@@ -174,7 +179,7 @@
     background: transparent;
     margin: 10px 0 15px 0;
 }
-    
+
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: 1px solid lightgrey;
@@ -197,7 +202,7 @@
     border-width: 16px 0;
     color: transparent;
 }
-  
+
 
 .slider::-moz-range-thumb {
     border:  1px solid lightgrey;
@@ -230,7 +235,7 @@
 }
 
 .slider:focus::-webkit-slider-runnable-track {background: crimson}
-  
+
 .slider::-moz-range-track {
     width: 100%;
     height: 3px;
@@ -239,7 +244,7 @@
     border-radius: 1px;
     border: none;
 }
-  
+
 .slider::-ms-fill-lower {
     background: crimson;
     border: none;
@@ -255,6 +260,28 @@
 }
 .slider:focus::-ms-fill-upper {
     background: crimson;
+}
+
+.adjustment-sign {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 0px 0px 5px 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.adjustment-sign:hover {
+  cursor: pointer;
+}
+
+.minus-sign {
+  margin: 0px 3px 5px 0px;
+}
+
+.plus-sign {
+  margin: 0px 0px 5px 3px;
 }
 
 .price-wrapper {
