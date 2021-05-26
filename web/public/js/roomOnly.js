@@ -385,6 +385,7 @@ function startChangingPrice(sign) {
 
 function addAdjustSignListener() {
     for (const sign of adjustmentSigns) {
+      sign.addEventListener('click', () => {sign.parentElement.getElementsByTagName('input')[0].focus()})
       sign.addEventListener('mousedown', () =>{startChangingPrice(sign)})
       sign.addEventListener('mouseup', () => {
         clearInterval(priceChangeInterval)
