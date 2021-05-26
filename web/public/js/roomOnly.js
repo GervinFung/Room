@@ -122,6 +122,7 @@ function startSearch() {
             if (event.key === 'Enter') {
                 displayLoading()
                 console.log('Enter pressed')
+                redirectFilter()
             }
         })
     }
@@ -132,18 +133,26 @@ function redirectFilter() {
 }
 
 function getQueryString() {
-  const campusQ = 'campus=' + getActiveCampus()
-  const minPriceQ = 'min=' + getMinPrice()
-  const maxPriceQ = 'max=' + getMaxPrice()
+  let queryString = '?'
+  queryString += 'campus=' + getActiveCampus()
+  queryString += '&min=' + getMinPrice()
+  queryString += '&max=' + getMaxPrice()
   let capacityQ = ''
   let capacity = getSelectedCapacity()
   for (let i = 0; i < capacity.length; i++) {
-    capacityQ += 'cap=' + capacity[i]
-    if (i != capacity.length-1) {
-      capacityQ += '&'
-    }
+    capacityQ += '&cap=' + capacity[i]
   }
-  return '?' + campusQ + '&' + minPriceQ + '&' + maxPriceQ + '&' + capacityQ
+  queryString += capacityQ
+  if (getAddress()) {
+    queryString += '&address=' + getAddress()
+  }
+  if (getRemarks()) {
+    queryString += '&remarks=' + getRemarks()
+  }
+  if (getFacilities()) {
+    queryString += '&facilities=' + getFacilities()
+  }
+  return queryString
 }
 
 function getActiveCampus() {
@@ -158,7 +167,17 @@ function getMaxPrice() {
   return upperRangeScroll.value
 }
 
+function getAddress() {
+  return advancedSearch[0].value
+}
 
+function getRemarks() {
+  return advancedSearch[1].value
+}
+
+function getFacilities() {
+  return advancedSearch[2].value
+}
 
 // room capacity
 function getSelectedCapacity() {

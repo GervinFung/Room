@@ -36,6 +36,9 @@ app.get('/room', (req, res, next) => {
   const minPrice = req.query.min
   const maxPrice = req.query.max
   const capacity = getCapacityQ(req.query.cap)
+  const address = getSearchQ(req.query.address)
+  const remarks = getSearchQ(req.query.remarks)
+  const facilities = getSearchQ(req.query.facilities)
   let otherCampus = ''
   if (campus === 'SL') {
     otherCampus = 'KP'
@@ -43,8 +46,11 @@ app.get('/room', (req, res, next) => {
     otherCampus = 'SL'
   }
   let set = {}
+  set.address = req.query.address
+  set.remarks = req.query.remarks
+  set.facilities = req.query.facilities
   const collection = db.collection(config.collection)
-  collection.find(generateQueryStatement(campus, minPrice, maxPrice, capacity))
+  collection.find(generateQueryStatement(campus, minPrice, maxPrice, capacity, address, remarks, facilities))
   .toArray((err, places) => {
     if (err) {
       res.status(500).send({
@@ -137,7 +143,26 @@ function getCapacityQ(cap) {
   return capacity
 }
 
-function generateQueryStatement(campus, minPrice, maxPrice, capacity) {
+function toRegex(arr) {
+  let regexArr = []
+  arr.forEach((item) => {
+    if (item) {
+      regexArr.push(new RegExp(item, "i"))
+    }
+  })
+  return regexArr
+}
+
+function getSearchQ(field) {
+  field = field.trim()
+  if (field) {
+    return toRegex(field.split(" "))
+  } else {
+    return undefined
+  }
+}
+
+function generateQueryStatement(campus, minPrice, maxPrice, capacity, address, remarks, facilities) {
   let query = {}
 
   if (campus) {
@@ -158,6 +183,15 @@ function generateQueryStatement(campus, minPrice, maxPrice, capacity) {
   if (capacity.length != 0) {
     query['rooms'].$elemMatch.capacity = {}
     query['rooms'].$elemMatch.capacity.$in = capacity
+  }
+  if (address) {
+    query['address'] = { $in: address }
+  }
+  if (remarks) {
+    query['remarks'] = { $in: remarks }
+  }
+  if (facilities) {
+    query['facilities'] = { $in: facilities }
   }
   return query
 }
