@@ -112,7 +112,6 @@ app.get('/saved', (req, res, next) => {
     collection.countDocuments({campus: 'SL'}, (err, result2) => {
       set.kpRoomCount = result
       set.slRoomCount = result2
-      console.log(set)
       res.status(200).render('page/saved', {socialLinks, set})
     })
   })

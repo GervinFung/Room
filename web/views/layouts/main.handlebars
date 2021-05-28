@@ -22,3 +22,21 @@
     </div>
   </body>
 </html>
+<script>
+  const toggle = document.getElementById('toggle-theme')
+  const classList = document.body.classList
+  const THEME_KEY = 'THEME_KEY'
+  if (JSON.parse(sessionStorage.getItem(THEME_KEY)) === true) {
+      classList.toggle('light-theme')
+      toggle.src = '../img/darkThemeIcon/dark.jpg'
+  } else {
+      toggle.src = '../img/darkThemeIcon/light.jpg'
+  }
+  toggle.addEventListener('click', () => {
+    classList.toggle('light-theme')
+    const isLight = classList.contains('light-theme')
+    toggle.src = `../img/darkThemeIcon/${isLight ? 'dark' : 'light'}.jpg`
+    sessionStorage.setItem(THEME_KEY, isLight)
+    console.log(sessionStorage.getItem(THEME_KEY))
+  })
+</script>

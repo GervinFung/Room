@@ -5,27 +5,27 @@
         <div class="logo">
             <img src="../img/index.jpg" alt="">
         </div>
-        <div class="title">
-            <h2>Accomodation Listing</h2>
+        <div class="toggle-wrapper">
+            <img id="toggle-theme" src="../img/darkThemeIcon/light.jpg" alt="toggle-icon">
         </div>
         <div class="filter-wrapper">
             <div class="filter-input">
                 <label class="search-bar address-search-bar">
                     <span><i class="fa fa-search"></i></span>
                     <div class="input-box">
-                        <div><b>Address</b></div>
+                        <div>Address</div>
                         <input type="text" class="advanced-search address-search" name="advanced-search" placeholder="Address" value="{{set.address}}">
                     </div>
                 </label>
                 <label class="search-bar">
                     <div class="input-box">
-                        <div><b>Remarks</b></div>
+                        <div>Remarks</div>
                         <input type="text" class="advanced-search remarks-search" name="advanced-search" placeholder="Remarks" value="{{set.remarks}}">
                     </div>
                 </label>
                 <label class="search-bar">
                     <div class="input-box">
-                        <div><b>Facilities</b></div>
+                        <div>Facilities</div>
                         <input type="text" class="advanced-search facilities-search" name="advanced-search" placeholder="Facilities" value="{{set.facilities}}">
                     </div>
                 </label>
@@ -40,9 +40,9 @@
             </div>
         </div>
         <div class="filter-wrapper" id="non-campus-filter">
-            <div id="saved"><a href="saved" class="button" id="saved-button">Saved</a></div>
+            <div id="saved"><a href="saved" class="button non-campus" id="saved-button">Saved</a></div>
             <div class="dropdown" id="price-range-dropdown">
-                <button id="price-range-button" class="button">Price</button>
+                <button id="price-range-button" class="button non-campus">Price</button>
                 <div class="dropdown-content" id="price-range-dropdown-content">
                     <div id="price-range-list">
                         <div class="range">
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="dropdown" id="room-capacity-dropdown">
-                <button id="room-capacity-button" class="button">Room Capacity</button>
+                <button id="room-capacity-button" class="button non-campus">Room Capacity</button>
                 <div class="dropdown-content" id="room-capacity-dropdown-content">
                     <div id="room-capacity-list">
                         {{#each set.cap}}
@@ -104,6 +104,7 @@
                     </div>
                 </div>
             </div>
+            <div id="map"><button class="button non-campus" id="map-button">Map</button></div>
         </div>
     </div>
     <div class="content" id="infos-content">
@@ -121,3 +122,4 @@
 <script src="/js/roomTemplate.js" charset="utf-8" defer></script>
 <script src="/js/filter.js" charset="utf-8" defer></script>
 <script src="/js/roomOnly.js" charset="utf-8" defer></script>
+<script src="/js/map.js" charset="utf-8" defer></script>

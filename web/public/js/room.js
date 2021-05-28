@@ -1,9 +1,11 @@
 const KAMPAR = findByID('kampar')
 const SGLONG = findByID('sg-long')
 const ACTIVE = ' active-campus'
-const AVAILABLE = ' available'
+const AVAILABLE = ' available-clear'
 
 const SAVED_ROOM = 'SAVED_ROOM'
+const SAVE_BTN = 'save-room-btn'
+const UNSAVE_BTN = 'unsave-room-btn'
 
 const waiting = findByID('waitingBackground')
 const saveLinkBtn = findByID('saved-button')
@@ -17,6 +19,7 @@ const exUrl = '=([^&#]*)'
 highlightActiveCampus()
 displaySavedLoading()
 displayCampusLoading()
+restorePage()
 
 function findByID(ID) {return document.getElementById(ID)}
 function findByClassName(className) {return document.getElementsByClassName(className)}
@@ -56,5 +59,15 @@ function displayCampusLoading() {
     })
     SGLONG.addEventListener('click', () => {
         displayLoading()
+    })
+}
+
+function restorePage() {
+    window.addEventListener('pageshow', function (event) {
+        const historyTraversal = event.persisted || (typeof window.performance !== 'undefined' && window.performance.type === 2)
+        if (historyTraversal) {
+            // Handle page restore.
+            window.location.reload()
+        }
     })
 }

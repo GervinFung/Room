@@ -77,6 +77,7 @@ function saveRoom() {
             }
 
             btn.innerHTML = btn.innerHTML === 'Save' ? 'Unsave' : 'Save'
+            btn.className = btn.className === SAVE_BTN ? UNSAVE_BTN : SAVE_BTN
 
             const saveSize = savedRoomList.length
 
@@ -91,14 +92,20 @@ function saveRoom() {
 function changeSaveBtnInnerHTML() {
     const savedRoomStorage = JSON.parse(localStorage.getItem(SAVED_ROOM))
     if (savedRoomStorage !== null) {
+        const saved = []
         const sum = savedRoomStorage.length
         if (sum === 0) {return}
         for (let i = 0; i < allInfosLength; i++) {
             const room = allInfos[i]
             const index = consistOf(savedRoomStorage, room.ID, room.address)
             if (index !== -1) {
-                saveBtnList[i].innerHTML = 'Unsave'
+                saved.push(saveBtnList[i])
             }
+        }
+        for (let i = 0; i < saved.length; i++) {
+            const btn = saved[i]
+            btn.className = UNSAVE_BTN
+            btn.innerHTML = 'Unsave'
         }
         saveLinkBtn.innerText = `Saved(${sum})`
     }
