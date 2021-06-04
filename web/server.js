@@ -16,7 +16,7 @@ const socialLinks = [
   { link: 'https://www.linkedin.com/school/universiti-tunku-abdul-rahman/?originalSubdomain=my/', class: 'fab fa-linkedin-in' },
   { link: 'https://www.facebook.com/UTARnet/', class: 'fab fa-facebook-f' },
   { link: 'https://www.instagram.com/utarnet1/?hl=en/', class: 'fab fa-instagram' },
-  { link: 'https://github.com/GervinFung/Room/tree/nodejs', class: 'fab fa-github' }
+  { link: 'https://github.com/GervinFung/Room', class: 'fab fa-github' }
 ]
 
 app.engine('handlebars', hbs.engine)

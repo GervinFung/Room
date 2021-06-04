@@ -1,4 +1,4 @@
-.filter-input, .input-price, .close {
+.filter-input, .input-price {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -36,10 +36,10 @@
     align-items: center;
 }
 
-.search-bar:hover {
+.search-bar:hover{
     background-color: var(--search-bar-hover);
     border-radius: 25px;
-    box-shadow: 0 1px 5px 0 rgba(0,0,0,0.5);
+    box-shadow: var(--search-bar-shadow);
 }
 
 .advanced-search {
@@ -127,15 +127,16 @@
     cursor: no-drop;
 }
 
-.close-button {
-    color: var(--red-color);
+#close-button {
+    color: gray;
     background-color: transparent;
     text-decoration: none;
-    font-size: 1.1em;
+    font-size: 1.5em;
     border: none;
     margin: 5px 5px 10px 5px;
-    display: none;
 }
+
+#filter {display: none}
 
 .available-clear {
     color: var(--secondary-color) !important;
@@ -147,6 +148,61 @@
     background-color:var(--active-campus) !important;
     border: 3px solid var(--active-campus) !important;
 } */
+
+@keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
 
 .dropdown {
     position: relative;
@@ -161,6 +217,11 @@
     box-shadow: 0 10px 20px 0 rgba(0,0,0,0.5);
     z-index: 1;
     border-radius: 25px;
+    animation: fadeIn ease 0.5s;
+    -moz-animation: fadeIn ease 0.5s;
+    -webkit-animation: fadeIn ease 0.5s;
+    -o-animation: fadeIn ease 0.5s;
+    -ms-animation: fadeIn ease 0.5s;
 }
 
 .dropdown-content label {
@@ -177,7 +238,6 @@
 }
 
 .dropdown-content label:hover {background-color:var(--capacity-hover)}
-
 
 
 
@@ -380,12 +440,12 @@ ul {list-style-type:none}
 }
 
 .save-room-btn {
-    color: var(--unsave-campus);
+    color: var(--button-text-color);
     background: var(--save-campus)
 }
 
 .unsave-room-btn {
-    color: var(--save-campus);
+    color: var(--button-text-color);
     background: var(--unsave-campus)
 }
 
@@ -422,6 +482,11 @@ ul {list-style-type:none}
     .less-vital-info {width: 40%}
 }
 
+@media (max-width: 684px) {
+    #price-range-button, #room-capacity-button {display: none}
+    #filter {display: flex}
+}
+
 @media (max-width: 675px) {
     .search-bar {display: none}
     .address-search-bar {display: flex}
@@ -447,17 +512,6 @@ ul {list-style-type:none}
     ul {padding-left: 0}
     .accomodation-info {width: 50%}
     .room-type {font-size: 1.2em}
-    .dropdown-content {
-        position: fixed;
-        width: 100vw;
-        height: auto;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        overflow: auto;
-        display: none;
-    }
-    .close-button {display: block}
 }
 
 @media (max-width: 451px) {
