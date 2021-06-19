@@ -1,0 +1,220 @@
+.content, .welcome-msg {
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+}
+
+.campus img{
+    transition: 0.5s ease;
+    height: auto;
+    width: 45vw;
+}
+
+.campus {
+    animation: fadeOut ease 0.7s;
+    -moz-animation: fadeOut ease 0.7s;
+    -webkit-animation: fadeOut ease 0.7s;
+    -o-animation: fadeOut ease 0.7s;
+    -ms-animation: fadeOut ease 0.7s;
+}
+
+
+.campus img:hover {transform: scale(1.1)}
+.word-link:hover{transform: scale(1.2)}
+
+.campus-name, .campus-img, .word-link {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.word-link {
+    transition: 0.5s ease;
+    text-decoration: none;
+    padding: 6px 16px 6px 16px;
+    color: var(--button-text-color);
+    margin: 25px;
+    border-radius: 25px;
+    font-size: 1.5em;
+}
+
+.msg > p {
+    color: var(--border-color);
+    font-size: 3em;
+}
+
+.msg {
+    text-align: center;
+    margin: 10px;
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    animation: fadeIn ease 0.7s;
+    -moz-animation: fadeIn ease 0.7s;
+    -webkit-animation: fadeIn ease 0.7s;
+    -o-animation: fadeIn ease 0.7s;
+    -ms-animation: fadeIn ease 0.7s;
+}
+
+#sglong-link {
+    background-color: var(--sglong-color);
+    border: 3px solid var(--sglong-color);
+}
+
+#kampar-link {
+    background-color: var(--kampar-color);
+    border: 3px solid var(--kampar-color);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity:0;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+
+@keyframes fadeOut {
+    0% {
+        opacity:0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes fadeOut {
+    0% {
+        opacity:0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity:0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+@-o-keyframes fadeOut {
+    0% {
+        opacity:0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+@-ms-keyframes fadeOut {
+    0% {
+        opacity:0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 1099px) {
+    .msg > p {font-size: 2.5em}
+}
+
+@media (max-width: 1057px) {
+    .msg > p {font-size: 2.25em}
+}
+
+@media (max-width: 1007px) {.campus img{width: 420px}}
+
+@media (max-width: 940px) {
+    .msg > p {font-size: 2em}
+}
+
+@media (max-width: 895px) {
+    .msg > p {font-size: 1.75em}
+    .msg {padding: 15px}
+}
+
+@media (max-width: 883px) {.campus img{width: 350px}}
+
+@media (max-width: 779px) {
+    .word-link {font-size: 1.35em}
+}
+
+@media (max-width: 680px) {
+    .msg > p {font-size: 1.45em}
+}
+
+@media (max-width: 639px) {
+    .content {display: block}
+    .campus img{width: 79vw}
+}
+
+@media (max-width: 451px) {
+    .word-link {font-size: 1.2em}
+}
+
+@media (max-width: 365px) {
+    .word-link {font-size: 1.1em}
+}
+
+@media (max-width: 301px) {
+    .word-link {font-size: 1em}
+}

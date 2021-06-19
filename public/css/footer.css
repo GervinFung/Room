@@ -1,14 +1,14 @@
 #footer {
     margin-top: 50px;
     height: fit-content;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     text-align: center;
 }
 
 .copyright p {
     font-size: 1.3em;
     text-transform: uppercase;
-    color: var(--secondary-color);
+    color: var(--primary-color);
 }
 .social-link {
     padding-bottom: 20px;
@@ -49,11 +49,11 @@
 .fa-instagram:hover {color: #dc2743}
 .fa-tiktok {
     text-shadow: 1px 2px crimson, -1px 1px #0ffbf9;
-    background-color: #14171A
+    background-color: black;/*#14171A*/
 }
 .fa-tiktok:hover {
     text-shadow: 1px 1px crimson, -1px 2px #0ffbf9;
-    color: #14171A
+    color: black;/*#14171A*/
 }
 .fa-twitter {background-color:#1DA1F2}
 .fa-twitter:hover {color:#1DA1F2}

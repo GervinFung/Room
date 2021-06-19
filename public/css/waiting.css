@@ -6,7 +6,7 @@
     left: 0;
     top: 0;
     overflow: auto;
-    background-color: black;
+    background-color: var(--primary-color);
     align-items: center;
     justify-content: center;
     display: none;

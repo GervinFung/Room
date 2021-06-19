@@ -1,0 +1,41 @@
+<div class="room-wrapper">
+    <div class="top-div">
+        <div class="id"><p>{{ID}}</p></div>
+        <div class="save-room-btn-container">
+            <button class="save-room-btn">Save</button>
+        </div>
+    </div>
+    <div class="infos">
+        <div class="vital-info">
+            <address class="address-info info">
+                <p class="address">Address</p>
+                <p class="description">{{address}}</p>
+            </address>
+            <div class="remarks-info info">
+                <p class="available">Available From: {{available_from.month}} {{available_from.year}}</p>
+                <p class="description">{{remarks}}</p>
+            </div>
+            <div class="facilities-info info">
+                <p class="facilities">Facilities</p>
+                <p class="description">{{facilities}}</p>
+            </div>
+        </div>
+        <div class="less-vital-info">
+            <div class="contact-info info">
+                <p class="contact">Contact Details</p>
+                <p class="description">{{name}}</p><p class="description">{{hp_no}}</p><p class="description">{{email}}</p>
+            </div>
+            <div class="accomodation-infos info">
+                {{#each rooms}}
+                <div class="accomodation-info">
+                    <p class="room-type">{{type}}</p>
+                    <ul>
+                        <li><p class="tenants">• {{capacity}} tenants</p></li>
+                        <li><p class="price-label">• &#36;{{price}} / tenant</p></li>
+                    </ul>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

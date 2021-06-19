@@ -1,0 +1,181 @@
+<link rel="stylesheet" href="./css/room.css">
+<link rel="stylesheet" href="./css/waiting.css">
+<link rel="stylesheet" href="./css/fullscreenFilter.css">
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a href="https://www.utar.edu.my/"><img src="../img/index.jpg" alt=""></a>
+        </div>
+        <div class="toggle-wrapper">
+            <img id="toggle-theme" src="../img/darkThemeIcon/light.jpg" alt="toggle-icon">
+        </div>
+        <div class="filter-wrapper">
+            <div class="filter-input">
+                <label class="search-bar address-search-bar">
+                    <span><i class="fa fa-search"></i></span>
+                    <div class="input-box">
+                        <div>Address</div>
+                        <input type="text" class="advanced-search address-search" name="advanced-search" placeholder="Address" value="{{set.address}}">
+                    </div>
+                </label>
+                <label class="search-bar">
+                    <div class="input-box">
+                        <div>Remarks</div>
+                        <input type="text" class="advanced-search remarks-search" name="advanced-search" placeholder="Remarks" value="{{set.remarks}}">
+                    </div>
+                </label>
+                <label class="search-bar">
+                    <div class="input-box">
+                        <div>Facilities</div>
+                        <input type="text" class="advanced-search facilities-search" name="advanced-search" placeholder="Facilities" value="{{set.facilities}}">
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="button-wrapper">
+                 <a href="room?campus=KP" class="button" id="kampar">Kampar({{set.kpRoomCount}})</a>
+            </div>
+            <div class="button-wrapper">
+                <a href="room?campus=SL" class="button" id="sg-long">Sg Long({{set.slRoomCount}})</a>
+            </div>
+        </div>
+        <div class="filter-wrapper" id="non-campus-filter">
+            <div id="saved"><a href="saved" class="button non-campus" id="saved-button">Saved</a></div>
+            <div class="dropdown" id="price-range-dropdown">
+                <button id="price-range-button" class="button non-campus">Price</button>
+                <div class="dropdown-content" id="price-range-dropdown-content">
+                    <div class="price-range-list">
+                        <div class="range">
+                            <div class="slider-wrapper">
+                              <span class="adjustment-sign minus-sign">&minus;</span>
+                              <input type="range" min={{set.minmin}} max={{set.maxmax}} step=10 class="slider lower-range-scroll">
+                              <span class="adjustment-sign plus-sign">&plus;</span>
+                            </div>
+                            <div class="price-wrapper">
+                                <div>min price</div>
+                                <div class="input-price">
+                                    <span>RM</span>
+                                    <label><input min={{set.minmin}} max={{set.maxmax}} value={{set.minmin}} type="text" class="price lower-range-input"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="range">
+                            <div class="slider-wrapper">
+                              <span class="adjustment-sign minus-sign">&minus;</span>
+                              <input type="range"  min={{set.minmin}} max={{set.maxmax}} step=10 class="slider upper-range-scroll">
+                              <span class="adjustment-sign plus-sign">&plus;</span>
+                            </div>
+                            <div class="price-wrapper">
+                                <div>max price</div>
+                                <div class="input-price">
+                                    <span>RM</span>
+                                    <label><input min={{set.minmin}} max={{set.maxmax}} value={{set.maxmax}} type="text" class="price upper-range-input"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <button class="price-clear-button clear-button">Clear</button>
+                        <button class="price-search-button search-button">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown" id="room-capacity-dropdown">
+                <button id="room-capacity-button" class="button non-campus">Room Capacity</button>
+                <div class="dropdown-content" id="room-capacity-dropdown-content">
+                    <div class="room-capacity-list">
+                        {{#each set.cap}}
+                          {{#if (lookup ../set.checkedCap @index)}}
+                            <label><input type="checkbox" class="capacity-{{.}}" checked><span class="room-capacity">{{.}} Tenant</span></label>
+                          {{else}}
+                            <label><input type="checkbox" class="capacity-{{.}}"><span class="room-capacity">{{.}} Tenant</span></label>
+                          {{/if}}
+                        {{/each}}
+                    </div>
+                    <div class="option">
+                        <button class="rc-clear-button clear-button">Clear</button>
+                        <button class="rc-search-button search-button">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div id="filter"><button id="filter-button" class="button non-campus">Filter</button></div>
+        </div>
+    </div>
+    <div class="content" id="infos-content">
+      {{#each places}}
+        {{> room}}
+      {{/each}}
+    </div>
+    <div id="waitingBackground">
+        <div class="waiting-content">
+            <div class="loader"></div>
+        </div>
+    </div>
+    <div id="filter-content">
+        <div class="filter-panel">
+            <div class="close">
+                <button class="close-room" id="close-button">X</button>
+            </div>
+            <div class="filter-criteria">
+                <div class="top-price">
+                    <div class="price-range-list">
+                        <div class="range">
+                            <div class="slider-wrapper">
+                                <span class="adjustment-sign minus-sign">&minus;</span>
+                                <input type="range" min={{set.minmin}} max={{set.maxmax}} step=10 class="slider lower-range-scroll">
+                                <span class="adjustment-sign plus-sign">&plus;</span>
+                            </div>
+                            <div class="price-wrapper">
+                                <div>min price</div>
+                                <div class="input-price">
+                                    <span>RM</span>
+                                    <label><input min={{set.minmin}} max={{set.maxmax}} value={{set.minmin}} type="text" class="price lower-range-input"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="range">
+                            <div class="slider-wrapper">
+                                <span class="adjustment-sign minus-sign">&minus;</span>
+                                <input type="range"  min={{set.minmin}} max={{set.maxmax}} step=10 class="slider upper-range-scroll">
+                                <span class="adjustment-sign plus-sign">&plus;</span>
+                            </div>
+                            <div class="price-wrapper">
+                                <div>max price</div>
+                                <div class="input-price">
+                                    <span>RM</span>
+                                    <label><input min={{set.minmin}} max={{set.maxmax}} value={{set.maxmax}} type="text" class="price upper-range-input"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <button class="price-clear-button clear-button">Clear</button>
+                            <button class="price-search-button search-button">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-room">
+                    <div class="room-capacity-list">
+                        {{#each set.cap}}
+                            {{#if (lookup ../set.checkedCap @index)}}
+                            <label><input type="checkbox" class="capacity-{{.}}" checked><span class="room-capacity">{{.}} Tenant</span></label>
+                            {{else}}
+                            <label><input type="checkbox" class="capacity-{{.}}"><span class="room-capacity">{{.}} Tenant</span></label>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="rc-clear-button clear-button">Clear</button>
+                    <button class="rc-search-button search-button">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/room.js" charset="utf-8" defer></script>
+<script src="/js/roomCapacity.js" charset="utf-8" defer></script>
+<script src="/js/priceRange.js" charset="utf-8" defer></script>
+<script src="/js/roomTemplate.js" charset="utf-8" defer></script>
+<script src="/js/filter.js" charset="utf-8" defer></script>
+<script src="/js/roomOnly.js" charset="utf-8" defer></script>

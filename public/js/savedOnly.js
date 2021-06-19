@@ -18,9 +18,24 @@ function downloadInfoInPlainText() {
         return
     }
     downloadTxtFileBtn.addEventListener('click', () => {
-        const text = generateReadableInfoFromList(roomList, roomListSize)
-        console.log(text)
-        createFileToDownload('txt', text)
+        if (typeof(Worker) !== 'undefined') {
+            const worker = new Worker('js/worker.js');
+
+            worker.addEventListener('message', e => {
+                const text = e.data;
+                console.log(text);
+                createFileToDownload('txt', text);
+                worker.terminate();
+            }, false);
+              
+            worker.postMessage({roomList, roomListSize});
+
+        } else {
+            console.log('no worker class')
+            const text = generateReadableInfoFromList(roomList, roomListSize);
+            console.log(text);
+            createFileToDownload('txt', text);
+        }
     })
 }
 
@@ -82,7 +97,7 @@ function processRoomInfo(rooms) {
 }
 
 function processInfo(info) {
-    return (info.length === 0 || info === null) ? '*NOT PROVIDED*' : info
+    return (info === null || info.length === 0) ? '*NOT PROVIDED*' : info
 }
 
 function removeSavedRoom() {
@@ -92,6 +107,7 @@ function removeSavedRoom() {
         saveBtn.addEventListener('click', () => {
             roomList.splice(i, 1)
             localStorage.setItem(SAVED_ROOM, JSON.stringify(roomList))
+            displayLoading();
             location.reload()
         })
     }

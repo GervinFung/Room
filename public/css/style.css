@@ -1,0 +1,87 @@
+* {
+    letter-spacing: 1px;
+    font-size: small;
+    font-family: 'Montserrat', serif;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: gray #000d0d;
+}
+
+*::-webkit-scrollbar {width: 7px}
+*::-webkit-scrollbar-track {background: #000d0d}
+*::-webkit-scrollbar-thumb {background-color: gray}
+
+:root {
+    --primary-color:#121212;
+    --secondary-color:#FEFEFE;
+
+    --button-text-color:#FEFEFE;
+    --red-color: #CC0F39;
+
+    --active-campus: #FEFEFE;
+    --sglong-color: #E50039;
+    --kampar-color: #0D6786;
+
+    --border-color: #FFF;
+    --high-emphases-text-color: rgba(255, 255, 255, 0.89);
+    --medium-emphases-text-color: rgba(255, 255, 255, 0.6);
+    --disabled-text-color: rgba(255, 255, 255, 0.38);
+
+    --search-bar-border:#37383B;
+    --search-bar-placeholder:#35383B;
+    --search-bar-hover:#2B2B2B;
+    --search-bar-shadow: 0 1px 5px 0 rgba(255,255,255,0.5);
+
+    --odd-infos-color:#222222;
+    --even-infos-color:#333333;
+
+    --save-campus:#25D366;
+    --unsave-campus:#CC3300;
+
+    --dropdown-dialog: #303030;
+    --price-wrapper: #787878;
+    --slider-thumb: #303030;
+    --slider-thumb-border:1px solid#DCDCDC;
+    --capacity-hover:#383838;
+    --search-button-font:#000;
+}
+
+.light-theme {
+    --primary-color:#FEFEFE;
+    --secondary-color:#121212;
+
+    --border-color: #37383B;
+    --high-emphases-text-color: rgba(0, 0, 0, 0.87);
+    --medium-emphases-text-color: rgba(0, 0, 0, 0.7);
+    --disabled-text-color: rgba(0, 0, 0, 0.38);
+
+    --search-bar-border:#37383B;
+    --search-bar-placeholder:#35383B;
+    --search-bar-hover:#FAFAFA;
+    --search-bar-shadow: 0 1px 5px 0 rgba(0,0,0,0.5);
+
+    --odd-infos-color:#F5F5F5;
+    --even-infos-color:#FBFBF9;
+
+    --dropdown-dialog: #FEFEFE;
+    --price-wrapper: #787878;
+    --slider-thumb:#FEFEFE;
+    --slider-thumb-border:1px solid #626262;
+    --capacity-hover:#F5F5F5;
+    --search-button-font:#FFF;
+}
+
+body {background-color: var(--primary-color)}
+
+.header {margin-bottom: 20px}
+
+.logo, .toggle-wrapper {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.toggle-wrapper {margin: 10px}
+#toggle-theme {cursor: pointer}
