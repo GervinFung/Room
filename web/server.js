@@ -3,12 +3,12 @@ const exphbs = require('express-handlebars')
 const MongoClient = require('mongodb').MongoClient
 const config = require('./config.js')
 
-const app = express()
-const port = 8000
+const app = express();
+const port = process.env.PORT || 8000;
 
-let db = null
+let db = null;
 
-const hbs = exphbs.create({defaultView: 'main'})
+const hbs = exphbs.create({defaultView: 'main'});
 
 const socialLinks = [
   { link: 'https://www.tiktok.com/@utarnet?lang=en', class: 'fab fa-tiktok' },
