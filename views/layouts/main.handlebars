@@ -4,9 +4,10 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="./css/style.css">
-      <link rel="stylesheet" href="./css/Montserrat/stylesheet.css">
-      <link rel="stylesheet" href="./css/footer.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/Montserrat/stylesheet.css">
+      <link rel="stylesheet" href="css/footer.css">
+      {{#each css}}<link rel="stylesheet" href="css/{{this}}.css">{{/each}}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.runtime.js" charset="utf-8" defer></script>
       <title>UTAR ROOM RENTAL</title>
@@ -15,28 +16,26 @@
     {{{body}}}
     <div id="footer">
         <div class="social-link">
-            {{#each socialLinks}}
-                <a href="{{link}}" rel="noreferrer" class="{{class}}"></a>
-            {{/each}}
+            {{#each socialLinks}}<a href="{{link}}" target="_blank" rel="noopener noreferrer" class="{{class}}"></a>{{/each}}
         </div>
     </div>
   </body>
 </html>
+{{#each js}}<script src="js/{{this}}.js"  charset="utf-8" defer></script>{{/each}}
 <script>
-  const toggle = document.getElementById('toggle-theme')
-  const classList = document.body.classList
-  const THEME_KEY = 'THEME_KEY'
+  const toggle = document.getElementById('toggle-theme');
+  const classList = document.body.classList;
+  const THEME_KEY = 'THEME_KEY';
   if (JSON.parse(sessionStorage.getItem(THEME_KEY)) === true) {
       classList.toggle('light-theme')
-      toggle.src = '../img/darkThemeIcon/dark.jpg'
+      toggle.className = 'fas fa-moon';
   } else {
-      toggle.src = '../img/darkThemeIcon/light.jpg'
+      toggle.className = 'fas fa-sun';
   }
   toggle.addEventListener('click', () => {
-    classList.toggle('light-theme')
-    const isLight = classList.contains('light-theme')
-    toggle.src = `../img/darkThemeIcon/${isLight ? 'dark' : 'light'}.jpg`
-    sessionStorage.setItem(THEME_KEY, isLight)
-    console.log(sessionStorage.getItem(THEME_KEY))
+    classList.toggle('light-theme');
+    const isLight = classList.contains('light-theme');
+    toggle.className = `fas fa-${isLight ? 'moon' : 'sun'}`;
+    sessionStorage.setItem(THEME_KEY, isLight);
   })
 </script>

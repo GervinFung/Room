@@ -1,9 +1,7 @@
 <div class="room-wrapper">
     <div class="top-div">
         <div class="id"><p>{{ID}}</p></div>
-        <div class="save-room-btn-container">
-            <button class="save-room-btn">Save</button>
-        </div>
+        <div class="save-room-btn-container"><button class="save-room-btn">Save</button></div>
     </div>
     <div class="infos">
         <div class="vital-info">
@@ -23,9 +21,15 @@
         <div class="less-vital-info">
             <div class="contact-info info">
                 <p class="contact">Contact Details</p>
-                <p class="description">{{name}}</p><p class="description">{{hp_no}}</p><p class="description">{{email}}</p>
+                <div class="container">
+                    <div><span class="description">{{name}}</span></div>
+                    <div><a style="text-decoration: none;" href="https://wa.me/60{{hp_no}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i><span class="description">{{hp_no}}</span></a></div>
+                    {{#if email}}
+                        <div><a style="text-decoration: none;" href="mailto:{{email}}" ><i class="fas fab fa-envelope"></i><span class="description">{{email}}</span></a></div>
+                    {{/if}}
+                </div>
             </div>
-            <div class="accomodation-infos info">
+            <div class="accomodation-infos info"> 
                 {{#each rooms}}
                 <div class="accomodation-info">
                     <p class="room-type">{{type}}</p>

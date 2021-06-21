@@ -29,7 +29,7 @@ function parseInfoElem(infoElem, idElem) {
   info.facilities = infoElem.querySelector('.facilities-info p').textContent.trim()
 
   const infoContactElem = infoElem.querySelector('.contact-info')
-  const contactDivs = infoContactElem.getElementsByTagName('p')
+  const contactDivs = infoContactElem.getElementsByTagName('div')
   info.name = contactDivs[0].textContent.trim()
   info.hp_no = contactDivs[1].textContent.trim()
   info.email = contactDivs[2].textContent.trim()

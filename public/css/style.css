@@ -84,4 +84,8 @@ body {background-color: var(--primary-color)}
 }
 
 .toggle-wrapper {margin: 10px}
-#toggle-theme {cursor: pointer}
+#toggle-theme {
+    cursor: pointer;
+    font-size: 2em;
+    color: var(--secondary-color);
+}

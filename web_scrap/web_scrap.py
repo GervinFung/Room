@@ -1,5 +1,4 @@
 import requests
-import datetime
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
@@ -12,7 +11,7 @@ def insert_contact(accom_dict, contact_column):
         if info.text == 'Office No.:':
             accom_dict['office_no'] = process_str
         elif info.text == 'H/P No.:':
-            accom_dict['hp_no'] = process_str
+            accom_dict['hp_no'] = process_str.replace('-', '')
         elif info.text == 'Email:':
             accom_dict['email'] = process_str
     accom_dict['name'] = name.text
@@ -92,7 +91,7 @@ def insert_to_database(rooms):
     username = 'eugeneyjy'
     password = 'Dnthackmepls78'
     uri = 'mongodb+srv://' + username + ':' + password + '@room.88id4.mongodb.net/utar_accom?retryWrites=true&w=majority'
-    client = MongoClient(uri)
+    client = MongoClient(uri, ssl=True,ssl_cert_reqs='CERT_NONE')
     db = client.utar_accom
     room_collection = db.room
     room_collection.delete_many({})
